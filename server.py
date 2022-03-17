@@ -1,7 +1,9 @@
+from queue import Empty
 from flask import Flask, request, render_template, jsonify
 import deviceManager as dM
 
-def inputHandler(userInput):
+#currently only keyboard support, checks if command in VK.Code -> execute, otherwise split and input or return 
+def inputToKeyboard(userInput):
     temp = userInput.replace(' ', '')
     if temp in dM.VK_CODE:
         dM.keyboardEvent(userInput)
@@ -13,26 +15,46 @@ def inputHandler(userInput):
         return 0
     else:
         return -1 #TODO: Better Error Handling 
-        
 
+
+userInputHistory = []
+# for now just append the list unlimited with history
+def inputToHistory(userInput):
+    global userInputHistory
+    if not userInput:
+        return
+    if userInputHistory:
+        userInputHistory.append(userInput)
+    else:
+        userInputHistory.insert(0, userInput)
+#transform every element in list into readable html style
+def listToString(userInputHistory):
+    xstr = '' 
+    for element in userInputHistory:
+        xstr += f"{element}" + '\n'
+    print("Function listToString",  xstr)
+    return xstr  
 app = Flask("LazyTool")
 
 @app.route('/')
 def default():
     return render_template('default.html')
-@app.route('/templates/frame.html', methods=['POST', 'GET'])
+@app.route('/templates/frame.html')
 def frame():
-    if request.method == "POST":
-        userInput = request.form['userInput']
-        print("Function userInput:",userInput)
     return render_template('frame.html')
-@app.route('/templates/inputBox.html', methods=['POST', 'GET'])
+@app.route('/templates/console.html', methods=['POST', 'GET'])
 def inputBox():
+    global userInputHistory
     if request.method == "POST":
-        userInput = request.form['userInput']
-        inputHandler(userInput)
+        userInput = request.form.get('userInput')
+        isKeyboardCheckBox = request.form.get('check')
+        inputToHistory(userInput)
+        #make sure we only send the input to pc if nessesary
+        if isKeyboardCheckBox:
+            inputToKeyboard(userInput)
         print("Function userInput:",userInput)
-    return render_template('inputBox.html')    
+    consoleOut = listToString(userInputHistory)
+    return render_template('console.html', value=consoleOut)    
 #testing purpose
 @app.route("/test_data")
 def names():

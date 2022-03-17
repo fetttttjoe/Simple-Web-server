@@ -1,6 +1,30 @@
 <!doctype html>
 <html>
-<form method="GET">
-    
-</form>
+    <style>
+        .inputBox {
+            display:block;
+            margin-left: 5px;
+            flex-wrap: wrap;
+            position: bottom;
+        }
+        .console{
+            display: block;
+            margin-left: 5px;
+            margin-right: 5px;
+            position: relative;
+            resize: none;
+            width: 250px;
+            height: 100px;
+            background-color: black;
+            color: green;
+        }
+    </style>
+<body>
+    <textarea class="console" rows="1" readonly>{{value}}</textarea> 
+    <form class = "inputBox" method="POST">
+        <input name="userInput" id="input">
+        <input type="submit" value="Send">
+        <input type="checkbox" name="check" id="cbKeyboard" checked>
+    </form>
+</body>
 </html>
