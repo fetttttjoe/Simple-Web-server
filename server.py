@@ -1,7 +1,7 @@
 from queue import Empty
 from flask import Flask, request, render_template, jsonify
 import deviceManager as dM
-
+#TODO: add blank = enter key (for now), so my lazy ass doesn't need to type enter on enter
 #currently only keyboard support, checks if command in VK.Code -> execute, otherwise split and input or return 
 def inputToKeyboard(userInput):
     temp = userInput.replace(' ', '')
@@ -18,7 +18,7 @@ def inputToKeyboard(userInput):
 
 
 userInputHistory = []
-# for now just append the list unlimited with history
+# for now just append the list unlimited with history TODO: use this to get input back (in case you misspelled something)
 def inputToHistory(userInput):
     global userInputHistory
     if not userInput:
