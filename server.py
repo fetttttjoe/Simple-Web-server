@@ -8,7 +8,7 @@ def inputToKeyboard(userInput):
     if temp in dM.VK_CODE:
         dM.keyboardEvent(userInput)
         return 0
-    if temp.isalnum():
+    if temp.isalnum(): #laziest dumb input block possible
         for element in userInput:
             if element in dM.VK_CODE:
                 dM.keyboardEvent(element)
