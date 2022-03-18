@@ -4,6 +4,7 @@
         body{
             width: 100vw;
             height:100vw;
+            text-align: center;
         }
         .inputBox {
             display:block;
@@ -11,24 +12,18 @@
             position: bottom;
         }
         .textinput{
-            text-align: bottom;
-            position: relative;
-            bottom: 0;
             resize: none;
             width:  35vw;
             height: 30vh;
+            background-color: black;
             color: green;
             /*transform: rotate(0deg); maybe i can somehow mirror the text to write from to bottom to the top idk
             writing-mode: tb-rl;*/
         }
-        .console{
-            background-color: black;
-        }
+        
     </style>
 <body>
-    <div class="console">
         <textarea class="textinput" rows="1" readonly>{{value}}</textarea> 
-    </div>
     <form class = "inputBox" method="POST">
         <input name="userInput" id="input">
         <input type="submit" value="Send">
