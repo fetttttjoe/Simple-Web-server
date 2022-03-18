@@ -2,19 +2,13 @@
 <html>
     <style>
         body{
-            width: 100vw;
-            height:100vw;
+      
             text-align: center;
-        }
-        .inputBox {
-            display:block;
-            flex-wrap: wrap;
-            position: bottom;
         }
         .textinput{
             resize: none;
-            width:  35vw;
-            height: 30vh;
+            width:  80vw;
+            height: 85vh;
             background-color: black;
             color: green;
             /*transform: rotate(0deg); maybe i can somehow mirror the text to write from to bottom to the top idk
@@ -23,10 +17,5 @@
     </style>
 <body>
         <textarea class="textinput" rows="1" readonly>{{value}}</textarea> 
-    <form class = "inputBox" method="POST">
-        <input name="userInput" id="input">
-        <input type="submit" value="Send">
-        <input type="checkbox" name="check" id="cbKeyboard" checked>
-    </form>
 </body>
 </html>

@@ -1,5 +1,6 @@
 from queue import Empty
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, send_from_directory, jsonify
+import os
 import deviceManager as dM
 
 #currently only keyboard support, checks if command in VK.Code -> execute, otherwise split and input or return 
@@ -37,14 +38,17 @@ def listToString(userInputHistory):
     print("Function listToString",  xstr)
     return xstr  
 app = Flask("LazyTool")
-
+#add same favicon for all tabs (for now)
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 @app.route('/')
 def default():
     return render_template('default.html')
 @app.route('/templates/frame.html')
 def frame():
     return render_template('frame.html')
-@app.route('/templates/console.html', methods=['POST', 'GET'])
+@app.route('/templates/input.html', methods=['GET', 'POST'])
 def inputBox():
     global userInputHistory
     if request.method == "POST":
@@ -54,10 +58,12 @@ def inputBox():
         isKeyboardCheckBox = request.form.get('check')
         inputToHistory(userInput)
         #make sure we only send the input to pc if nessesary
-        
         if isKeyboardCheckBox:
             inputToKeyboard(userInput)
-        print("Function inputBox:",userInput)
+        print("Function inputBox:", userInput)
+    return render_template('input.html')
+@app.route('/templates/console.html', methods=['GET'])
+def inputConsole():
     consoleOut = listToString(userInputHistory)
     return render_template('console.html', value=consoleOut)    
 #testing purpose
@@ -67,4 +73,5 @@ def names():
     return jsonify(data)
 
 if __name__ == "__main__":
+    
     app.run("0.0.0.0", 5000, ssl_context=("cert.pem", "key.pem"), debug=True) #prob not the way to go, but since its local i cant care less.
