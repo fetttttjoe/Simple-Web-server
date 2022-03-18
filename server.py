@@ -1,10 +1,13 @@
 from queue import Empty
 from flask import Flask, request, render_template, jsonify
 import deviceManager as dM
-#TODO: add blank = enter key (for now), so my lazy ass doesn't need to type enter on enter
+
 #currently only keyboard support, checks if command in VK.Code -> execute, otherwise split and input or return 
 def inputToKeyboard(userInput):
     temp = userInput.replace(' ', '')
+    if temp == '':
+        dM.keyboardEvent('enter')
+        return 0
     if temp in dM.VK_CODE:
         dM.keyboardEvent(userInput)
         return 0
@@ -15,7 +18,6 @@ def inputToKeyboard(userInput):
         return 0
     else:
         return -1 #TODO: Better Error Handling 
-
 
 userInputHistory = []
 # for now just append the list unlimited with history
@@ -46,13 +48,16 @@ def frame():
 def inputBox():
     global userInputHistory
     if request.method == "POST":
+        sendEvent = request.form.get('Send')
+        print(sendEvent)
         userInput = request.form.get('userInput')
         isKeyboardCheckBox = request.form.get('check')
         inputToHistory(userInput)
         #make sure we only send the input to pc if nessesary
+        
         if isKeyboardCheckBox:
             inputToKeyboard(userInput)
-        print("Function userInput:",userInput)
+        print("Function inputBox:",userInput)
     consoleOut = listToString(userInputHistory)
     return render_template('console.html', value=consoleOut)    
 #testing purpose
