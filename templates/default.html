@@ -1,8 +1,14 @@
 <!doctype html>
-<ul>
-    <li><a href="templates/inputBox.html">CMD</a></li>
-    <li><a href="templates/frame.html">Frame :(</a></li>
-    <li><a href="keyboardinput.html">KeyboardInput</a></li>
-    <li><a href="mouse.html">MouseControll</a></li>
-    <li><a href="restart.py">Restart</a></li>
-</ul>
+</html>
+  <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home.css') }}">
+  </head>
+  <body>
+    <nav class="navMenu">
+      <a href="templates/frame.html">Console</a>
+      <a href="#">Controller</a>
+      <a href="#">Timer</a>
+      <div class="dot"></div>
+    </nav>
+  </body>
+</html>
