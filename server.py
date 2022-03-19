@@ -43,6 +43,9 @@ def favicon():
 @app.route('/')
 def default():
     return render_template('default.html')
+@app.route('/template/controller.html')
+def controller():
+    return render_template('controller.html')
 @app.route('/templates/frame.html')
 def frame():
     return render_template('frame.html')
@@ -55,7 +58,7 @@ def inputBox():
         userInput = request.form.get('userInput')
         isKeyboardCheckBox = request.form.get('check')
         inputToHistory(userInput)
-        #make sure we only send the input to keyboard if checkbox is checked
+        #make sure we only send the input to pc if nessesary
         if isKeyboardCheckBox:
             inputToKeyboard(userInput)
         print("Function inputBox:", userInput)
