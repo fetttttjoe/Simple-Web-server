@@ -1,4 +1,5 @@
 #TODO: Clean this mess
+#https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 import win32gui
 import win32api
 import win32con
@@ -6,6 +7,7 @@ import time
 
 VK_CODE = {
     'tab': 0x09,
+    'windows':0x5B,
     'clear': 0x0C,
     'enter': 0x0D,
     'shift': 0x10,
@@ -13,6 +15,17 @@ VK_CODE = {
     'delete': 0x2E,
     'back': 0x08,
     'esc' : 0x1B,
+    'mute': 0xAD, 
+    'volumeUp': 0xAF,
+    'browserBack':	0xA6,	
+    'browserFavorites': 0xAB,	
+	'browserForward': 0xA7,
+	'browserHome': 0xAC,
+    'browserRefresh': 0xA8, 
+    'browserSearch': 0xAA,	
+    'browserStop': 0xA9,
+    'volumeDown': 0xAE,
+    'OEM_PERIOD(>.)': 0xBE, #TODO:test if shift needed for dot + better name	
     ' ' : 0x20,
     '0': 0x30,
     '1': 0x31,
@@ -63,6 +76,17 @@ VK_CODE = {
     'F11': 0x7A,
     'F12': 0x7B,
 }
+# TODO: rework this
+# usage: key1 is first button pressed and last released
+# example: Win + r = execute
+def kombiKeyboardInput(key1, key2):
+    win32api.keybd_event(VK_CODE[f'{key1}'], 0, 0, 0)
+    time.sleep(.05)
+    win32api.keybd_event(VK_CODE[f'{key2}'], 0, 0, 0)
+    time.sleep(.05)
+    win32api.keybd_event(VK_CODE[f'{key2}'], 0, win32con.KEYEVENTF_KEYUP, 0)
+    time.sleep(.05)
+    win32api.keybd_event(VK_CODE[f'{key1}'], 0, win32con.KEYEVENTF_KEYUP, 0)
 
 def mouseLeftlick(x, y):
     win32api.SetCursorPos((x, y))
@@ -84,4 +108,3 @@ def keyboardEvent(user_input):
     time.sleep(.05)
     win32api.keybd_event(VK_CODE[f'{user_input}'], 0, win32con.KEYEVENTF_KEYUP, 0)
 
-#dM.keyboardEvent(0x4F)
