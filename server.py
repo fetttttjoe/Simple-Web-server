@@ -55,7 +55,7 @@ def inputBox():
         userInput = request.form.get('userInput')
         isKeyboardCheckBox = request.form.get('check')
         inputToHistory(userInput)
-        #make sure we only send the input to pc if nessesary
+        #make sure we only send the input to keyboard if checkbox is checked
         if isKeyboardCheckBox:
             inputToKeyboard(userInput)
         print("Function inputBox:", userInput)
