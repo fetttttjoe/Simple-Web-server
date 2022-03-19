@@ -1,24 +1,22 @@
+from logging import error
 from queue import Empty
 from flask import Flask, request, render_template, send_from_directory, jsonify
 import os
 import deviceManager as dM
 
-#currently only keyboard support, checks if command in VK.Code -> execute, otherwise split and input or return 
+#checks if command in VK.Code -> execute, otherwise split and input or return 
 def inputToKeyboard(userInput):
-    temp = userInput.replace(' ', '')
-    if temp == '':
-        dM.keyboardEvent('enter')
-        return 0
-    if temp in dM.VK_CODE:
-        dM.keyboardEvent(userInput)
-        return 0
-    if temp.isalnum():
-        for element in userInput:
-            if element in dM.VK_CODE:
-                dM.keyboardEvent(element)
-        return 0
-    else:
-        return -1 #TODO: Better Error Handling 
+    match userInput:
+        case ' ':
+            dM.keyboardEvent('enter')
+        case userInput if userInput in dM.VK_CODE:
+            dM.keyboardEvent(userInput)
+        case userInput if userInput.isalnum():
+            for element in userInput:
+                if element in dM.VK_CODE:
+                    dM.keyboardEvent(element)            
+        case _:
+            raise ValueError(f"Function inputToKeyboard default case reached {userInput}") #TODO: Better Error Handling 
 
 userInputHistory = []
 # for now just append the list unlimited with history
@@ -73,5 +71,4 @@ def names():
     return jsonify(data)
 
 if __name__ == "__main__":
-    
     app.run("0.0.0.0", 5000, ssl_context=("cert.pem", "key.pem"), debug=True) #prob not the way to go, but since its local i cant care less.
