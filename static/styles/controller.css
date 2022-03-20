@@ -14,7 +14,7 @@ body {
     width: 350px;
 }
 .button {
-    position: flex;
+    position: relative;
     display:block;
     cursor:pointer;
     max-width: 100px;
@@ -73,40 +73,25 @@ i.control-icon {
 
 div.circle {
     border: 1px solid #c2c1c1;
+    width:150px; 
+    height: 150px;
     border-radius: 50%;
 }
 
 div.ok-inner {
-    padding: 30px;
+    width: 75px;
+    height: 75px;
 }
 
 div.ok-outer {
     padding: 100px;
 }
-div.circle>div.buttonRight{
+div.circle>div.buttonCircle{
     width: 10px;
     background-color:red;
     height:10px;
-    transform: translate(70px) translateY(-12px);
 }
-
-div.circle>div.buttonBottom {
-    width: 10px;
-    background-color:red;
-    height:10px;
-    transform: rotate(90deg) translate(70px) translateY(-12px);
-}
-
-div.circle>div.buttonLeft {
-    width: 10px;
-    background-color:red;
-    height:10px;
-    transform: rotate(180deg) translate(70px) translateY(-12px);
-}
-
-div.circle>div.buttonTop {
-    width: 10px;
-    background-color:red;
-    height:10px;
-    transform: rotate(270deg) translate(70px) translateY(-12px) ;
+.buttonCircle:active {
+    color:black;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }
