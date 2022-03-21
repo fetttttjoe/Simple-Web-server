@@ -49,7 +49,11 @@ remoteControll = {
     'buttonBack'        : 'back',
     'buttonVolumeUp'    : 'volumeUp',
     'buttonVolumeDown'  : 'volumeDown',
-}
+    'buttonArrowUp'     : 'arrowUp',
+    'buttonArrowDown'   : 'arrowDown',
+    'buttonArrowLeft'   : 'arrowLeft',
+    'buttonArrowRight'  : 'arrowRight',
+    }
 #add controller_page for now, we will need some kinda input field later (for search etc)
 @app.route('/template/controller_page.html', methods=['GET', 'POST'])
 def controller():
