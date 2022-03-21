@@ -43,9 +43,12 @@ def favicon():
 def default():
     return render_template('default.html')
 
-# dict for fixed buttons on remote
+# dict for fixed buttons on remote (name : keyboardcommand)
 remoteControll = {
-    'buttonBack' : 'back',
+    'buttonMute'        : 'mute',
+    'buttonBack'        : 'back',
+    'buttonVolumeUp'    : 'volumeUp',
+    'buttonVolumeDown'  : 'volumeDown',
 }
 #add controller_page for now, we will need some kinda input field later (for search etc)
 @app.route('/template/controller_page.html', methods=['GET', 'POST'])
