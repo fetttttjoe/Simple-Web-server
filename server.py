@@ -1,3 +1,4 @@
+from ast import Or
 from queue import Empty
 from flask import Flask, request, render_template, send_from_directory, jsonify
 import os
@@ -12,12 +13,10 @@ def inputToKeyboard(userInput):
             dM.keyboardEvent('enter')
         case userInput if userInput in dM.VK_CODE:
             dM.keyboardEvent(userInput)
-        case userInput if userInput.isalnum():
+        case _: # this might be dangerous, but will work for now.
             for element in userInput:
                 if element in dM.VK_CODE:
                     dM.keyboardEvent(element)            
-        case _:
-            raise ValueError(f"Function inputToKeyboard default case reached {userInput}") #TODO: Better Error Handling 
 
 userInputHistory = []
 #
@@ -92,13 +91,19 @@ def controller():
         # lets take -sleep <timer> for now as (userInput)
         #
         userInput = request.form.get('userInput')
-        inputToHistory(userInput)
-        if "-sleep" in userInput:
-            temp = userInput.split()
-            if temp[1].isalnum():  # fixed on first value for now, i might implement a general input handler later
-                dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
+        if userInput:
+            inputToHistory(userInput)
+            if userInput.lower() == "enter":
+                inputToKeyboard('enter')
+            elif "-sleep" in userInput:
+                temp = userInput.split()
+                if temp[1].isalnum():  # fixed on first value for now, i might implement a general input handler later
+                    dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
+                else:
+                    print(f"Shutdown Timer: Pls check your Input {userInput}")
             else:
-                print(f"Shutdown Timer: Pls check your Input {userInput}")
+                inputToKeyboard(userInput)
+
     return render_template('controler.html')
 #
 # Site for input with "console" field which displays past inputs
