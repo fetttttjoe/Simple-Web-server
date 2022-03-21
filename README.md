@@ -14,3 +14,5 @@ Refine Code<br>
 <br>
 *Future me: voice support*
 
+Bug:<br>
+if remote control open and you click back you still have the console frame on screen. maybe rerender instead of reroute? 
