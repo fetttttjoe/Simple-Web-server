@@ -3,15 +3,14 @@
 Creates a Webpage to controll your Computer from your local Network.
 ---------------------------------------------------------------------
 My first html css experience, probably did alot of mistakes xD <br>
-TODO:
-FIX OK BUTTON
-Test those weird VC commands
-Input field for Controller (search)
-Webpage for mouse support. (joystick?)
-Better Console
-Refine Code
-
-
-
+TODO:<br>
+FIX OK BUTTON<br>
+Test those weird VC commands<br>
+Input field for Controller (search)<br>
+Webpage for mouse support. (joystick?)<br>
+Better Console<br>
+Refine Code<br>
+<br>
+<br>
 /*Future me: voice support*/
 
