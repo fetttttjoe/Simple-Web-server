@@ -1,6 +1,6 @@
 Smart Remote Server WIP
 ---------------------------------------------------------------------
-Creates a Webpage to controll your Computer from your local Network.
+Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
 My first html css experience, probably did alot of mistakes xD <br>
 TODO:<br>
