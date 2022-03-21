@@ -1,7 +1,8 @@
 # Smart Remote Server WIP
+---------------------------------------------------------------------
 Creates a Webpage to controll your Computer from your local Network.
-
-My first html css experience, probably did alot of mistakes xD
+---------------------------------------------------------------------
+My first html css experience, probably did alot of mistakes xD <br>
 TODO:
 FIX OK BUTTON
 Test those weird VC commands
