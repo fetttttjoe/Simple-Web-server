@@ -4,7 +4,10 @@ import win32gui
 import win32api
 import win32con
 import time
-
+import os 
+#
+# Some Virtual Keyboard codes 
+#
 VK_CODE = {
     'tab': 0x09,
     'windows': 0x5B,
@@ -80,7 +83,8 @@ VK_CODE = {
     'F11': 0x7A,
     'F12': 0x7B,
 }
-
+#
+# Function to Send Keyinput Combinations
 # TODO: rework this
 # usage: key1 is first button pressed and last released
 # example: Win + r = execute
@@ -92,27 +96,43 @@ def kombiKeyboardInput(key1, key2):
     win32api.keybd_event(VK_CODE[f'{key2}'], 0, win32con.KEYEVENTF_KEYUP, 0)
     time.sleep(.05)
     win32api.keybd_event(VK_CODE[f'{key1}'], 0, win32con.KEYEVENTF_KEYUP, 0)
-
-
+#
+# Left click with mouse
+#
 def mouseLeftlick(x, y):
     win32api.SetCursorPos((x, y))
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0, 0)
     time.sleep(.05)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
 
-
+#
+# Right click with mouse
+#
 def mouseRightclick(x, y):
     win32api.SetCursorPos((x, y))
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, x, y, 0, 0)
     time.sleep(.05)
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, x, y, 0, 0)
 
-
+#
+# Get current mouse position
+#
 def getMousePosition():
    return win32gui.GetCursorPos()
 
-
-def keyboardEvent(user_input):
-    win32api.keybd_event(VK_CODE[f'{user_input}'], 0, 0, 0)
+#
+# Send Input to Keyboard
+#
+def keyboardEvent(userInput):
+    win32api.keybd_event(VK_CODE[f'{userInput}'], 0, 0, 0)
     time.sleep(.05)
-    win32api.keybd_event(VK_CODE[f'{user_input}'], 0, win32con.KEYEVENTF_KEYUP, 0)
+    win32api.keybd_event(VK_CODE[f'{userInput}'], 0, win32con.KEYEVENTF_KEYUP, 0)
+
+#
+# Shutdown timer for Windows 
+# Input var:
+#   time in min     
+#shutdown.exe -s -t %zeit% -f 
+def shutdownWindows(minutes):
+    minutes = int(minutes) * 60
+    os.system(f"shutdown.exe /s /t {minutes}")

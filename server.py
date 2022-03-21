@@ -2,8 +2,10 @@ from queue import Empty
 from flask import Flask, request, render_template, send_from_directory, jsonify
 import os
 import deviceManager as dM
-
-#checks if command in VK.Code -> execute, otherwise split and input or return 
+#
+# Sends user Input to Keyboard 
+# Checks if command in VK.Code -> execute, otherwise split and input or return 
+#
 def inputToKeyboard(userInput):
     match userInput:
         case ' ':
@@ -18,7 +20,10 @@ def inputToKeyboard(userInput):
             raise ValueError(f"Function inputToKeyboard default case reached {userInput}") #TODO: Better Error Handling 
 
 userInputHistory = []
+#
+# Past user Input (only storing Runtime)
 # for now just append the list unlimited with history
+#
 def inputToHistory(userInput):
     global userInputHistory
     if not userInput:
@@ -27,23 +32,19 @@ def inputToHistory(userInput):
         userInputHistory.append(userInput)
     else:
         userInputHistory.insert(0, userInput)
-#transform every element in list into readable html style
+#
+#transform every element in list into string with newline char
+#
 def listToString(userInputHistory):
     xstr = '' 
     for element in userInputHistory:
         xstr += f"{element}" + '\n'
     print("Function listToString",  xstr)
     return xstr  
-app = Flask("LazyTool")
-#add same favicon for all tabs (for now)
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
-@app.route('/')
-def default():
-    return render_template('default.html')
 
+#
 # dict for fixed buttons on remote (name : keyboardcommand)
+#
 remoteControll = {
     'buttonMute'        : 'mute',
     'buttonBack'        : 'back',
@@ -53,37 +54,90 @@ remoteControll = {
     'buttonArrowDown'   : 'arrowDown',
     'buttonArrowLeft'   : 'arrowLeft',
     'buttonArrowRight'  : 'arrowRight',
-    }
-#add controller_page for now, we will need some kinda input field later (for search etc)
-@app.route('/template/controller_page.html', methods=['GET', 'POST'])
+}
+
+
+#
+# Create Flask app
+#
+app = Flask("LazyTool")
+#
+# add the favicon
+#
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+#
+# default page
+#
+@app.route('/')
+def default():
+    return render_template('default.html')
+#
+# Frame to hold Console and Control unit
+#
+@app.route('/controler_page.html')
+def consoleControl():
+    return render_template('controler_page.html')
+#
+# Renders Controller
+#
+@app.route('/controler.html', methods=['GET', 'POST'])
 def controller():
     if request.method == "POST":
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
                 inputToKeyboard(buttonAction) # just execute the given command (for now)
-    return render_template('controller.html')
-@app.route('/templates/frame.html')
-def frame():
+        #
+        # lets take -sleep <timer> for now as (userInput)
+        #
+        userInput = request.form.get('userInput')
+        inputToHistory(userInput)
+        if "-sleep" in userInput:
+            temp = userInput.split()
+            if temp[1].isalnum():  # fixed on first value for now, i might implement a general input handler later
+                dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
+            else:
+                print(f"Shutdown Timer: Pls check your Input {userInput}")
+    return render_template('controler.html')
+#
+# Site for input with "console" field which displays past inputs
+#
+@app.route('/frame.html')
+def consoleInput():
     return render_template('frame.html')
-@app.route('/templates/input.html', methods=['GET', 'POST'])
+#
+# Creates the Input Box to send Commands to Keyboard
+#
+@app.route('/input.html', methods=['GET', 'POST'])
 def inputBox():
     global userInputHistory
     if request.method == "POST":
-        sendEvent = request.form.get('Send')
-        print(sendEvent)
         userInput = request.form.get('userInput')
-        isKeyboardCheckBox = request.form.get('check')
+        #
+        # lets take -sleep <timer> for now as (userInput)
+        #
+        if "-sleep" in userInput:
+            temp = userInput.split()
+            print(temp)
+            if temp[1].isalnum(): # fixed on first value for now, i might implement a general input handler later
+                dM.shutdownWindows(temp[1])
+            else:
+                print(f"Shutdown Timer: Pls check your Input {userInput}")
         inputToHistory(userInput)
-        #make sure we only send the input to pc if nessesary
-        if isKeyboardCheckBox:
-            inputToKeyboard(userInput)
+        inputToKeyboard(userInput)
         print("Function inputBox:", userInput)
     return render_template('input.html')
-@app.route('/templates/console.html', methods=['GET'])
+#
+# Displays past inputs
+#
+@app.route('/console.html', methods=['GET'])
 def inputConsole():
     consoleOut = listToString(userInputHistory)
     return render_template('console.html', value=consoleOut)    
-#testing purpose
+#
+# testing purpose maybe something for later
+#
 @app.route("/test_data")
 def names():
     data = {"Command List": ["Search Browser", "Open CMD", "Wtf", "I can't care less"]}

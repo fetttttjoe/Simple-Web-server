@@ -10,34 +10,35 @@
     </script>
     <style>
         html,body{
-            background-color: black;
+            font-family: "Montserrat", sans-serif;
+            background: rgb(29, 29, 29);
         }
         .wrapper{
             text-align: center;
             align-items: center;
         }
         .iframeConsole iframe{
-            width: 45vw;
-            height: calc(100vh-10vh)
+            width: 350px;
+            height: 50px;
+            top: 0%;
         }
-        .iframeInput iframe{
-            bottom:0;
-            width: 45vw;
-            height: 10vh;
+        .iframeRemote iframe{
+            width: 350px;
+            height: 650px;
         }
     </style>
     <head >
-        <title>Console...</title>    
-
+        <title>RemoteControl</title>    
     </head>
     <body>
-        <div  class="wrapper">
+        <div class="wrapper">
             <div class="iframeConsole">
                 <iframe id="iframeConsole" src="console.html" frameborder="0" scrolling="no"></iframe>
             </div>
-            <div class="iframeInput">
-                <iframe src="input.html" frameborder="0" scrolling="no"></iframe>
+            <div class="iframeRemote">
+                <iframe id="iframeRemote" src="controler.html" frameborder="0" scrolling="no"></iframe>
             </div>
+            
         </div>
     </body>   
 </html>

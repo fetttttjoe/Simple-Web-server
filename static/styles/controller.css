@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: black;
+    background: rgb(29, 29, 29);
 }
 
 .container {
@@ -23,6 +23,10 @@ body {
     text-align: center;
     width: 100%;
     height: 100%;
+}
+.button:active {
+    color:black;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }
 .buttonCircle {
     width: 65px; 
@@ -46,10 +50,7 @@ body {
     border: 1px solid #c2c1c1;
     border-radius: 50%;
 }
-.button:active {
-    color:black;
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
-}
+
 div.menu-grid{
     display: grid;
     grid-template-columns: auto auto auto;
@@ -58,7 +59,7 @@ div.menu-grid{
 }
 
 div.menu-grid>form>button>div {
-    padding: 10px 25px;
+    padding: 8px 20px;
 }
 
 span.label {
