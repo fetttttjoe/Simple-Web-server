@@ -1,4 +1,3 @@
-from logging import error
 from queue import Empty
 from flask import Flask, request, render_template, send_from_directory, jsonify
 import os
@@ -43,8 +42,18 @@ def favicon():
 @app.route('/')
 def default():
     return render_template('default.html')
-@app.route('/template/controller.html')
+
+# dict for fixed buttons on remote
+remoteControll = {
+    'buttonBack' : 'back',
+}
+#add controller_page for now, we will need some kinda input field later (for search etc)
+@app.route('/template/controller_page.html', methods=['GET', 'POST'])
 def controller():
+    if request.method == "POST":
+        for buttonName, buttonAction in remoteControll.items():
+            if request.form.get(f'{buttonName}') == "pressed":
+                inputToKeyboard(buttonAction) # just execute the given command (for now)
     return render_template('controller.html')
 @app.route('/templates/frame.html')
 def frame():
