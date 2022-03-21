@@ -1,5 +1,3 @@
-from ast import Or
-from queue import Empty
 from flask import Flask, request, render_template, send_from_directory, jsonify
 import os
 import deviceManager as dM
@@ -40,7 +38,6 @@ def listToString(userInputHistory):
         xstr += f"{element}" + '\n'
     print("Function listToString",  xstr)
     return xstr  
-
 #
 # dict for fixed buttons on remote (name : keyboardcommand)
 #
@@ -103,7 +100,6 @@ def controller():
                     print(f"Shutdown Timer: Pls check your Input {userInput}")
             else:
                 inputToKeyboard(userInput)
-
     return render_template('controler.html')
 #
 # Site for input with "console" field which displays past inputs
