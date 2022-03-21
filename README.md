@@ -7,7 +7,7 @@ TODO:<br>
 FIX OK BUTTON<br>
 MAKE KEY ARROWS ALIGNED HOLY<br>
 Test those weird VC commands<br>
-Input field for Controller (search)<br>
+<95% done>we still need special characters, Input field for Controller (search)<br>
 Webpage for mouse support. (joystick?)<br>
 Better Console<br>
 Refine Code<br>
