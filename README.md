@@ -1,9 +1,9 @@
-#Smart Remote Server WIP
+Smart Remote Server WIP
 ---------------------------------------------------------------------
-##Creates a Webpage to controll your Computer from your local Network.
+Creates a Webpage to controll your Computer from your local Network.
 ---------------------------------------------------------------------
 My first html css experience, probably did alot of mistakes xD <br>
-###TODO:<br>
+TODO:<br>
 FIX OK BUTTON<br>
 Test those weird VC commands<br>
 Input field for Controller (search)<br>
