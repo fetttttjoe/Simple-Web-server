@@ -1,19 +1,34 @@
 from cx_Freeze import setup, Executable
+from datetime import date
+import os
+#
+# Folders to include
+# Note: possible to add files if in same folder as setup.py
+#
+programName = "RemoteControl"
+programPath = f"{os.path.abspath('.')}/{programName}"
+includeFiles = [    
+                f"{programPath}/templates",
+                f"{programPath}/static", 
+                f"{programPath}/util",
+                f"{programPath}/certificates" ]
 
-includefiles = ['templates', 'static', 'deviceManager.py', 'certificates' ]
+today = date.today()
+d = today.strftime("%m/%d/%Y")
 
+executable = Executable(script="startServer.py", target_name=f"{programName}.exe")
 
-main_executable = Executable("startServer.py")
-
-setup(name="RemoteControl",
+setup(name = programName,
       version="0.1",
-      description="RemoteControl",
+      description= f"RemoteControl BuildDate: {d}",
       options={
       'build_exe': {
-          'packages': ['jinja2',
-                       'jinja2.ext',
-                       'sys',
-                       'os'],
-          'include_files': includefiles,
+          'build_exe' : f'build/{programName}',
+          'packages': [
+                        'jinja2',
+                        'jinja2.ext',
+                        'sys',
+                        'os'],
+          'include_files': includeFiles,
           'include_msvcr': True}},
-      executables=[main_executable], requires=['flask'])
+      executables=[executable], requires=['flask'])
