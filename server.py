@@ -94,8 +94,10 @@ def controller():
         
         if "-sleep" in userInput:
             temp = userInput.split()
+            print(temp[1])
             if temp[1].isnumeric():  # fixed on first value for now, i might implement a general input handler later
                 dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
+                print(f"Sleeptimer set for {temp[1]} min")
             else:
                 print(f"Shutdown Timer: Pls check your Input {userInput}")
         else:
@@ -121,8 +123,9 @@ def inputBox():
         if "-sleep" in userInput:
             temp = userInput.split()
             print(temp)
-            if temp[1].isalnum(): # fixed on first value for now, i might implement a general input handler later
+            if temp[1].isnumeric(): # fixed on first value for now, i might implement a general input handler later
                 dM.shutdownWindows(temp[1])
+                print(f"Sleeptimer set for {temp[1]} min")
             else:
                 print(f"Shutdown Timer: Pls check your Input {userInput}")
         inputToHistory(userInput)
