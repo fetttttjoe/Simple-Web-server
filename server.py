@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_from_directory, jsonify
+from flask import Flask, request, render_template, send_from_directory, redirect, jsonify
 import os
 import deviceManager as dM
 #
@@ -84,6 +84,7 @@ def controller():
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
                 inputToKeyboard(buttonAction) # just execute the given command (for now)
+                return redirect("controler.html")
         #
         # lets take -sleep <timer> for now as (userInput)
         #
