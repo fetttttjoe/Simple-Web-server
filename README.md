@@ -4,8 +4,8 @@ Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
 
 create exe:<br> 
-\t 1) go into download folder <br>
-\t 2) py setup.py build
+<pre> 1) go into download folder <br>
+<pre> 2) py setup.py build
 
 
 My first html css experience, probably did alot of mistakes xD <br>
