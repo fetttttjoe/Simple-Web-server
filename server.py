@@ -94,7 +94,7 @@ def controller():
         
         if "-sleep" in userInput:
             temp = userInput.split()
-            if temp[1].isalnum():  # fixed on first value for now, i might implement a general input handler later
+            if temp[1].isnumeric():  # fixed on first value for now, i might implement a general input handler later
                 dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
             else:
                 print(f"Shutdown Timer: Pls check your Input {userInput}")
