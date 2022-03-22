@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<!--ty for making this public https://github.com/ui-code/RemoteControl-->
+<script>
+
+    function Refresh() {
+        var Iframe = document.getElementById("iframeConsole").contentWindow;
+        window.setInterval(function() {
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            var fh = fso.OpenTextFile(".\\Chat.txt",1);
+            var FileContents = fh.AtEndOfStream ? "" : fh.ReadAll();
+            fh.Close();
+            Iframe.document.body.innerHTML = "<pre>" + FileContents + "</pre>"
+    }, 500);
+}
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/controller.css') }}">
+
+</head>
+<body>
+    <!--container-->
+    <div class="wrapper">
+        <div class="iframeConsole">
+            <iframe id="iframeConsole" src="console.html" frameborder="0" scrolling="no"></iframe>
+        </div>
+        <div class="container">
+            <div class="d-flex flex-row justify-content-between px-3 py-4 align-items-center">
+                <form method="PUT" action="/">
+                    <button type="submit" class ="button"> 
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </form>
+                <form class = "inputBox" method="POST">
+                    <input name="userInput"></input>
+                </form>
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <div class="menu-grid">
+                    <form method="POST">    
+                        <button type="submit" name ="buttonPower" class ="button" value="pressed"> 
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-power-off active"></i>
+                                <span class="label">Power</span>
+                            </div>
+                        </button> 
+                    </form>
+                    <form method="POST">    
+                        <button type="submit" name ="buttonInput" class ="button" value="pressed"> 
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span class="label">Input</span>
+                            </div>
+                        </button>
+                    </form>
+                    <form method="POST">    
+                        <button type="submit" name ="buttonControl" class ="button" value="pressed">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-cog"></i>
+                                <span class="label">Control</span>
+                            </div>
+                        </button>
+                    </form>
+                    <form method="POST">    
+                        <button type="submit" name ="buttonMenu" class ="button" value="pressed">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-bars"></i>
+                                <span class="label">Menu</span>
+                            </div>
+                        </button>
+                    </form>
+                    <form method="POST">    
+                        <button type="submit" name ="buttonNumeric" class ="button" value="pressed">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-circle"></i>
+                                <span class="label" >Numeric</span>
+                            </div>
+                        </button> 
+                    </form>
+                        <form method="POST">    
+                            <button type="submit" name ="buttonBack" class ="button" value="pressed">
+                                <div class="d-flex flex-column align-items-center">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span class="label">Back</span>
+                                </div>
+                            </button>
+                        </form>                                    
+                </div>
+            </div>
+
+            <div class="d-flex flex-row mt-4 justify-content-between px-2">
+                <div class="d-flex flex-column rounded-bg py-3 px-4 justify-content-center align-items-center">
+                    <form method="POST">
+                        <button type="submit" class="button" name="buttonChannelUp" value="pressed">
+                            <i class="fas fa-chevron-up py-3 control-icon"></i>
+                        </button>
+                    </form>
+
+                    <span class="label py-3">Channel</span>
+                    <form method="POST">
+                        <button type="submit" class="button" name="buttonChannelDown" value="pressed">
+                            <i class="fas fa-chevron-down py-3 control-icon"></i>
+                        </button>
+                    </form>
+                </div>
+                    <form method="POST">
+                        <button type="submit" class="buttonCircle" name="buttonHome" value="pressed">
+                            <i class="fas fa-home home-icon"></i>
+                            <span class="label">Home</span>
+                        </button>
+                    </form>  
+                <div class="d-flex flex-column rounded-bg py-3 px-4 justify-content-center align-items-center">
+                    <form method="POST">
+                        <button type="submit" class="button" name="buttonVolumeUp" value="pressed">
+                            <i class="fas fa-plus py-3 control-icon"></i>
+                        </button>
+                    </form>
+                    <span class="label py-3">Volume</span>
+                    <form method="POST">
+                        <button type="submit" class="button" name="buttonVolumeDown" value="pressed">
+                            <i class="fas fa-minus py-3 control-icon"></i>
+                        </button>
+                    </form> 
+                </div>
+            </div>
+            <form method="POST">
+                <div class="mt-4 pt-5 position-relative d-flex flex-row justify-content-center align-items-center">
+                    
+                <div class="circle ok-outer position-absolute">
+                    <button type="submit" class="buttonOk" name="buttonEnter" value="pressed" >
+                        <span>OK</span>
+                    </button>
+                    <button type="submit" class="buttonCircleSmall" name="buttonArrowRight" style="transform: translateX(-15px) translateY(-15px) translate(70px);" value="pressed">
+                        <i class="fas fa-caret-right control-icon"></i>
+                    </button>
+                    <button type="submit" class="buttonCircleSmall" name="buttonArrowDown" style="transform: translateX(-15px) translateY(-15px) rotate(90deg) translate(70px);"  value="pressed">
+                        <i class="fas fa-caret-right control-icon"></i>
+                    </button>
+                    <button type="submit" class="buttonCircleSmall" name="buttonArrowLeft" style="transform: translateX(-15px) translateY(-15px) rotate(180deg) translate(70px);" value="pressed">
+                        <i class="fas fa-caret-right control-icon"></i>
+                    </button>
+                    <button type="submit" class="buttonCircleSmall" name="buttonArrowUp" style="transform: translateX(-15px) translateY(-15px) rotate(270deg) translate(70px);" value="pressed">
+                        <i class="fas fa-caret-right control-icon"></i>  
+                    </button>
+                </div>
+                </div>
+            </form>
+            <form method="POST">
+                <div class="d-flex flex-row justify-content-between mt-2 pt-5 px-3">
+                    <button type="submit" class="buttonCircle"  name="buttonDots" value="pressed">
+                        <i class="fas fa-ellipsis-h p-3 control-icon"></i>
+                    </button>
+                    <button type="submit" class="buttonCircle" name="buttonMute" value="pressed">
+                        <i class="fas fa-volume-mute p-3 control-icon"></i>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

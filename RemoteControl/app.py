@@ -49,7 +49,7 @@ def listToString(userInput):
 # dict for fixed buttons on remote (buttonname : keyboardcommand)
 #
 remoteControll = {
-    'buttonBack'        : 'browserBack',
+    'buttonBack'        : 'back',
     'buttonEnter'       : 'enter',
     'buttonMute'        : 'mute',
     'buttonVolumeUp'    : 'volumeUp',
