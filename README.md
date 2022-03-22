@@ -3,9 +3,8 @@ Smart Remote Server WIP
 Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
 
-<pre>create exe:<br> 
-<pre> 
-1) go into download folder <br>
+<pre>create exe:<br>  
+<pre>1) go into download folder <br>
 2) py setup.py build</pre></pre>
 
 
