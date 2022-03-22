@@ -4,7 +4,8 @@ Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
 
 <pre>create exe:<br> 
- <pre> 1) go into download folder <br>
+<pre> 
+1) go into download folder <br>
 2) py setup.py build</pre></pre>
 
 
@@ -16,8 +17,6 @@ Test those weird VC commands<br>
 Webpage for mouse support. (joystick?)<br>
 Better Console<br>
 Refine Code<br>
-<br>
-<br>
 </pre>
 *Future me: voice support*
 
