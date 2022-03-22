@@ -4,6 +4,7 @@ Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
 
 <pre>create exe:<br>  
+requirements: python:3.10.1 requirements.txt
 <pre>1) go into folder <br>
 2)launch setup.py: "py setup.py build"</pre></pre>
 
