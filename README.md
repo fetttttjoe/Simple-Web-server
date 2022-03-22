@@ -2,13 +2,14 @@ Smart Remote Server WIP
 ---------------------------------------------------------------------
 Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
-with cx_freeze you can make make executable with command: py setup.py build -> i somehow broke the input field. i will look into that soon
----------------------------------------------------------------------
+
+create exe:<br> 
+\t 1) go into download folder <br>
+\t 2) py setup.py build
+
 
 My first html css experience, probably did alot of mistakes xD <br>
 TODO:<br>
-FIX OK BUTTON<br>
-MAKE KEY ARROWS ALIGNED HOLY<br>
 Test those weird VC commands<br>
 <95% done>we still need special characters <- Input field for Controller (search)<br>
 Webpage for mouse support. (joystick?)<br>
@@ -18,5 +19,4 @@ Refine Code<br>
 <br>
 *Future me: voice support*
 
-Bug:<br>
-if remote control open and you click back you still have the console frame on screen. maybe rerender instead of reroute? 
+
