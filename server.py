@@ -88,7 +88,6 @@ def controller():
         # lets take -sleep <timer> for now as (userInput)
         #
         userInput = request.form.get('userInput')
-        print(type(userInput))
         if userInput == '': # we want the enter key
             userInput = 'enter'
         inputToHistory(userInput)
