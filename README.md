@@ -25,8 +25,8 @@ default page <br>
 ![mainHoverEffect](https://user-images.githubusercontent.com/45294596/159589356-6cbc73f5-62af-44ee-b562-b339f222c9a4.png)
 ---------------------------------------------------------------------
 sleep timer command: <br>
-![sleep](https://user-images.githubusercontent.com/45294596/159588605-4e673e72-4c18-492b-8548-38b3294bdc0a.png)
-Hello World send from Phone:
-![helloWorld](https://user-images.githubusercontent.com/45294596/159589137-752d4f37-b30f-4567-b1e1-00e108b1f724.png)
-Console (needs some cool design :( ):
-![uglyConsole](https://user-images.githubusercontent.com/45294596/159588613-d44aa9e1-6bcd-420f-a32f-18350d0c6313.png)
+![sleep](https://user-images.githubusercontent.com/45294596/159588605-4e673e72-4c18-492b-8548-38b3294bdc0a.png)<br>
+Hello World send from Phone:<br>
+![helloWorld](https://user-images.githubusercontent.com/45294596/159589137-752d4f37-b30f-4567-b1e1-00e108b1f724.png)<br>
+Console (needs some cool design :( ):<br>
+![uglyConsole](https://user-images.githubusercontent.com/45294596/159588613-d44aa9e1-6bcd-420f-a32f-18350d0c6313.png)<br>
