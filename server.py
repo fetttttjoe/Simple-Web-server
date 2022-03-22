@@ -39,7 +39,7 @@ def listToString(userInputHistory):
     print("Function listToString",  xstr)
     return xstr  
 #
-# dict for fixed buttons on remote (name : keyboardcommand)
+# dict for fixed buttons on remote (buttonname : keyboardcommand)
 #
 remoteControll = {
     'buttonMute'        : 'mute',
@@ -88,18 +88,19 @@ def controller():
         # lets take -sleep <timer> for now as (userInput)
         #
         userInput = request.form.get('userInput')
-        if userInput:
-            inputToHistory(userInput)
-            if userInput.lower() == "enter":
-                inputToKeyboard('enter')
-            elif "-sleep" in userInput:
-                temp = userInput.split()
-                if temp[1].isalnum():  # fixed on first value for now, i might implement a general input handler later
-                    dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
-                else:
-                    print(f"Shutdown Timer: Pls check your Input {userInput}")
+        print(type(userInput))
+        if userInput == '': # we want the enter key
+            userInput = 'enter'
+        inputToHistory(userInput)
+        
+        if "-sleep" in userInput:
+            temp = userInput.split()
+            if temp[1].isalnum():  # fixed on first value for now, i might implement a general input handler later
+                dM.shutdownWindows(temp[1]) #i will rework this as soon as we get some more options
             else:
-                inputToKeyboard(userInput)
+                print(f"Shutdown Timer: Pls check your Input {userInput}")
+        else:
+            inputToKeyboard(userInput)
     return render_template('controler.html')
 #
 # Site for input with "console" field which displays past inputs
