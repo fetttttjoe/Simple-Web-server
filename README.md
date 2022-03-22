@@ -2,6 +2,9 @@ Smart Remote Server WIP
 ---------------------------------------------------------------------
 Creates a Webpage to control your Computer from your local Network.
 ---------------------------------------------------------------------
+with cx_freeze you can make make executable with command: py setup.py build
+---------------------------------------------------------------------
+
 My first html css experience, probably did alot of mistakes xD <br>
 TODO:<br>
 FIX OK BUTTON<br>
