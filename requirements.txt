@@ -1,0 +1,4 @@
+cx_Freeze==6.10
+Flask==2.0.3
+pywin32==303
+win32gui==221.6
