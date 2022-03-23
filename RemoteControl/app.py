@@ -77,7 +77,6 @@ def favicon():
 @app.route('/')
 def default():
     return render_template('default.html')
-
 #
 # Renders Controller
 #
