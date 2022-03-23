@@ -60,7 +60,7 @@ remoteControll = {
     'buttonArrowDown'   : 'arrowDown',
     'buttonArrowLeft'   : 'arrowLeft',
     'buttonArrowRight'  : 'arrowRight',
-    'buttonChannelDown' : 'mouseRight',
+    'buttonChannelDown' : 'mouseRight', # doesnt seem to work, so we def need input handler for mouse
 }
 
 

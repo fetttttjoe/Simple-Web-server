@@ -19,7 +19,7 @@ div.iframeConsole{
     top: 15px;
 }
 .iframeConsole>iframe{
-    overflow: auto;
+    overflow:hidden;
     height: 70px;
 }
 .inputBox{
