@@ -1,14 +1,16 @@
-from posixpath import dirname
-from tkinter import Button
 from flask import Flask, request, render_template, send_from_directory, redirect, jsonify
 import RemoteControl.util.deviceManager as dM
 import os, sys
 
 #
+# Program Name (also used for path), this needs to be done in a smarter way.
+#   idk why relative inputs wont let me pull the name from setup.py
+#
+programName = "RemoteControl"
+#
 # Initialise Flask app
 # 
 app = Flask("LazyTool")
-
 #
 # Sends user Input to Keyboard 
 # Checks if command in VK.Code -> execute, otherwise split and input or return 
@@ -58,6 +60,7 @@ remoteControll = {
     'buttonArrowDown'   : 'arrowDown',
     'buttonArrowLeft'   : 'arrowLeft',
     'buttonArrowRight'  : 'arrowRight',
+    'buttonChannelDown' : 'mouseRight',
 }
 
 
@@ -66,7 +69,8 @@ remoteControll = {
 #
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+    return send_from_directory(os.path.join(f"{app.root_path}/{programName}", 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 #
 # default page
 #
@@ -82,6 +86,7 @@ def controller():
     if request.method == "POST":
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
+                print(buttonName, buttonAction) #DEBUG
                 inputToKeyboard(buttonAction) # just execute the given command (for now)
                 return redirect('controler.html')
          # get a better solution to check for user Inputs

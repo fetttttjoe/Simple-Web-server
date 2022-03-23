@@ -28,12 +28,18 @@ VK_CODE = {
     'browserStop': 0xA9,
     'volumeUp': 0xAF,
     'volumeDown': 0xAE,
-    'OEM_PERIOD(>.)': 0xBE,  # TODO:test if shift needed for dot + better name
+    'mouseLeft': 0x01,          # TODO: Test if that can subs mouse
+    'mouseRight': 0x02,         # TODO: Test if that can subs mouse
     'arrowUp': 0x26,
     'arrowDown': 0x28,
     'arrowRight': 0x27,
     'arrowLeft': 0x25,
-    ' ': 0x20,
+    ' ': 0x20, # "special characters"
+    '+': 0xBB,
+    ',': 0xBC,
+    '-': 0xBD,
+    '.': 0xBE,
+    '/': 0x6F,
     '0': 0x30,
     '1': 0x31,
     '2': 0x32,
@@ -97,7 +103,7 @@ def kombiKeyboardInput(key1, key2):
     time.sleep(.05)
     win32api.keybd_event(VK_CODE[f'{key1}'], 0, win32con.KEYEVENTF_KEYUP, 0)
 #
-# Left click with mouse
+# Left click with mouse (not needed i think)
 #
 def mouseLeftlick(x, y):
     win32api.SetCursorPos((x, y))
@@ -106,7 +112,7 @@ def mouseLeftlick(x, y):
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
 
 #
-# Right click with mouse
+# Right click with mouse (not needed i think)
 #
 def mouseRightclick(x, y):
     win32api.SetCursorPos((x, y))
@@ -115,7 +121,7 @@ def mouseRightclick(x, y):
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, x, y, 0, 0)
 
 #
-# Get current mouse position
+# Get current mouse position 
 #
 def getMousePosition():
    return win32gui.GetCursorPos()

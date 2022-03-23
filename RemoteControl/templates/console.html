@@ -1,21 +1,40 @@
 <!doctype html>
-<html>
-    <style>
-        html, body{
-            background: rgb(29, 29, 29);
-            text-align: center;
+<html> 
+    <script>
+        window.setInterval("refreshConsole()", 5000) /*Reload the page every 5 sek*/
+        function refreshConsole() {
+            location.reload(); 
+            const element = document.getElementById("content");
+            element.scrollIntoView(false);
         }
-        .textinput{
+    </script>
+    <style>
+        html{
+            background: rgb(29, 29, 29);
+        }
+        body{
+            display: flex;
+            position: relative;
+            align-items: center;
+            flex-direction: column;
+            margin: auto;
+        }
+        body>.historyOut{
             resize: none;
-            width:  80vw;
-            height: 85vh;
             background-color: black;
             color: green;
+            width: 250px;
+            height: 50px;
             /*transform: rotate(0deg); maybe i can somehow mirror the text to write from to bottom to the top idk
-            writing-mode: tb-rl;*/
+            writing-mode: tb-rl; used to write Horizontaly*/ 
+        }
+        textarea{
+            margin-top: 10px;
+            border: 1px solid #c2c1c1;
+            border-radius: 10px;
         }
     </style>
-<body>
-        <textarea class="textinput" rows="1" readonly>{{value}}</textarea> 
+<body id="content">
+        <textarea class="historyOut" id = "textinput" rows="1" readonly>{{value}}</textarea> 
 </body>
 </html>
