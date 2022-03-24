@@ -9,11 +9,9 @@ requirements: python:3.10.1 requirements.txt
 2)launch setup.py: "py setup.py build"</pre></pre>
 
 
-My first html css experience, probably did alot of mistakes xD <br>
+My first html, css, javaScript experience, probably did alot of mistakes xD <br>
 <pre>
 TODO:<br>
-Test those weird VC commands<br>
-<95% done>we still need special characters <- Input field for Controller (search)<br>
 Webpage for mouse support. (joystick?)<br>
 Better Console<br>
 Refine Code<br>
