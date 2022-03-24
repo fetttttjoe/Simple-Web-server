@@ -1,13 +1,13 @@
 <!doctype html>
 <html > 
-   
+    <head>
+        <title>Console</title>
+    </head>
     <style>
         html{
-           
             background: rgb(29, 29, 29);
         }
-        body{
-            
+        body{      
             display: flex;
             position: relative;
             align-items: center;
@@ -30,8 +30,7 @@
        /* Hide scrollbar for Chrome, Safari and Opera */
         body>div.historyBox::-webkit-scrollbar {
             display: none;
-        }
-        
+        }      
     </style>
 <body >
     <div class="historyBox" id="content">{% autoescape false %}{{value|safe}}{% endautoescape %}</div>
