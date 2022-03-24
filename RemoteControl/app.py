@@ -43,10 +43,10 @@ def inputToHistory(userInput):
 #transform every element in list into string with newline char
 #
 def listToString(userInput):
-    temp = '' 
+    temp = '<strong class=consoleOut>' 
     for element in userInput:
         temp += f"{element}<br>" 
-    temp += '<br>'
+    temp += '</strong>' # TEXT MUST BE STROOOONG
     return temp  
 #
 # dict for fixed buttons on remote (buttonname : keyboardcommand)
@@ -64,9 +64,6 @@ remoteControll = {
     'buttonChannelDown' : 'mouseRight', # doesnt seem to work, so we def need input handler for mouse
 }
 
-
-
-#
 # default page
 #
 @app.route('/')
@@ -163,20 +160,5 @@ if __name__ == '__main__':
     app.static_folder   = dirName + '/static'
     cert = dirName + '/certificates/cert.pem'
     key = dirName + '/certificates/key.pem'
-    print(key, cert)
+    
     app.run("0.0.0.0", 5000, ssl_context=(cert, key), debug=True) #prob not the way to go, but since its local i cant care less.
-    #
-    # add the favicon
-    #
-    @app.route('/favicon.ico')
-    def favicon():
-        return send_from_directory(os.path.join(f"{app.root_path}/{programName}", 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
-else:
-    #
-    # add the favicon
-    #
-    @app.route('/favicon.ico')
-    def favicon():
-        return send_from_directory(os.path.join(f"{app.root_path}", 'static'),
-                                   'favicon.ico', mimetype='image/vnd.microsoft.icon')
