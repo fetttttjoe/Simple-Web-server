@@ -1,4 +1,3 @@
-from fileinput import filename
 from flask import Flask, request, render_template, send_from_directory, redirect, jsonify, url_for
 import RemoteControl.util.deviceManager as dM
 import os, sys
