@@ -21,7 +21,7 @@ Refine Code<br>
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
-| Hello World: | Sleep timer command: |
+| Hello World: | Sleep timer command: (-sleep <time>) |
 |----------------------|------------------------------|
 |![helloWorld](https://user-images.githubusercontent.com/45294596/159751803-2b634302-5b85-4f4a-a9b8-c9e07ac3fb8a.png) | ![shutdown](https://user-images.githubusercontent.com/45294596/159751807-d7738fe8-02ad-4c91-98c1-9432dc976b57.png)|
 |Console (needs some cool design :( ): | default page: |
