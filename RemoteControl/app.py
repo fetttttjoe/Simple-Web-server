@@ -65,13 +65,7 @@ remoteControll = {
 }
 
 
-#
-# add the favicon
-#
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(f"{app.root_path}/{programName}", 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 #
 # default page
 #
@@ -171,3 +165,18 @@ if __name__ == '__main__':
     key = dirName + '/certificates/key.pem'
     print(key, cert)
     app.run("0.0.0.0", 5000, ssl_context=(cert, key), debug=True) #prob not the way to go, but since its local i cant care less.
+    #
+    # add the favicon
+    #
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(f"{app.root_path}/{programName}", 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+else:
+    #
+    # add the favicon
+    #
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(f"{app.root_path}", 'static'),
+                                   'favicon.ico', mimetype='image/vnd.microsoft.icon')

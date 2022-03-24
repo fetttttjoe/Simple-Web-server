@@ -17,6 +17,8 @@
                         element.scrollTop = element.scrollHeight;
                     };
                 }
+                console.log(localStorage.getItem('scrollPosition'))
+                scrollStoredPos();
             }
             function scrollStoredPos(){
                 if(localStorage.getItem('scrollPosition') !== null){
