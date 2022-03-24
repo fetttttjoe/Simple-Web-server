@@ -43,10 +43,11 @@ def inputToHistory(userInput):
 #transform every element in list into string with newline char
 #
 def listToString(userInput):
-    xstr = '' 
+    temp = '' 
     for element in userInput:
-        xstr += f"{element}" + '\n'
-    return xstr  
+        temp += f"{element}<br>" 
+    temp += '<br>'
+    return temp  
 #
 # dict for fixed buttons on remote (buttonname : keyboardcommand)
 #
@@ -147,7 +148,7 @@ def inputBox():
 # Displays past inputs
 #
 @app.route('/console.html', methods=['GET'])
-def inputConsole():
+def console():
     consoleOut = listToString(userInputHistory)
     return render_template( "console.html" , value=consoleOut)    
 #

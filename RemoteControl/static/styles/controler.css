@@ -2,20 +2,17 @@
 html, body {
     background: rgb(29, 29, 29);
 }
-
 .wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-div.iframeConsole{
+div.console{
+    top:2px;
     position: absolute;
-    top: 0;
+  
 }
-.iframeConsole>iframe{
-    height: 70px;
-}
+
 .inputBox{
     width: 180px;
     height: 25px;
@@ -66,7 +63,6 @@ button.button:active {
     border: 1px solid #c2c1c1;
     border-radius: 50%;
 }
-
 div.menu-grid{
     display: grid;
     grid-template-columns: auto auto auto;
@@ -74,16 +70,13 @@ div.menu-grid{
     border: 1px outset #c2c1c1;
     overflow: hidden;
 }
-
 div.menu-grid>form>button>div {
     padding: 10px 20px;
 }
-
 span.label {
     font-size: 12px;
     color: #8e8e8e;
 }
-
 div.menu-grid>form>button>div>i {
     color: #2e2e2e;
     font-size: 1.2em;
@@ -95,33 +88,27 @@ div.menu-grid>form>button>div>i {
 div.menu-grid>form>button>div>i.active {
     color: #d51600;
 }
-
 div.rounded-bg {
     background: #d9d9d9;
     border-radius: 50px;
 }
-
 i.home-icon {
     font-size: 24px;
     color: #2e2e2e;
 }
-
 i.control-icon {
     font-size: 24px;
     color: #2e2e2e;
 }
-
 div.circle {
     border: 1px solid #c2c1c1;
     width:150px; 
     height: 150px;
     border-radius: 50%;
 }
-
 div.ok-outer {
     padding: 90px;
 }
-
 .buttonCircle:active {
     color:black;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);

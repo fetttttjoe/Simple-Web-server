@@ -3,38 +3,16 @@
 <html>
     
     <head>
-        <script>
-            window.addEventListener('scroll',function() {
-            //When scroll change, you save it on localStorage.
-            localStorage.setItem('scrollPosition',window.scrollY);
-            },false);
-            window.onload = function(){ //render the console on load
-                document.getElementById("iframeConsole").innerHTML = '<iframe id="iframeConsole" scrolling="no" src="console.html"></iframe>'; 
-                if (document.getElementById('iframeConsole')){
-                    const iframe = document.getElementById('iframeConsole').firstElementChild
-                    iframe.onload = function () {
-                        const element = document.getElementById('iframeConsole').firstElementChild.contentWindow.document.getElementById('content') //get the element with id=content of console.html
-                        element.scrollTop = element.scrollHeight;
-                    };
-                }
-            }
-            function scrollStoredPos(){
-                if(localStorage.getItem('scrollPosition') !== null){
-                    window.scrollTo(0, localStorage.getItem('scrollPosition'));
-                }
-            }
-            window.setInterval("aboutReload()", 8000) /*Reload the page every 5 sek*/
-            function aboutReload() {    
-                document.getElementById("iframeConsole").innerHTML = '<iframe id="iframeConsole" scrolling="no" src="console.html"></iframe>';
-                setTimeout(scrollStoredPos, 80); // idk but seems like browser needs some time for me ~80ms
-                console.log(document.getElementById('iframeConsole').firstElementChild)
-                if (document.getElementById('iframeConsole')){
-                    const iframe = document.getElementById('iframeConsole').firstElementChild
-                    iframe.onload = function () {
-                        const element = document.getElementById('iframeConsole').firstElementChild.contentWindow.document.getElementById('content') //get the element with id=content of console.html
-                        element.scrollTop = element.scrollHeight; //scroll all the way to the bottom
-                    };
-                }
+        <script script>
+            window.setInterval("refreshConsole()", 5000) /*Reload the page every 5 sek*/            
+            function refreshConsole() {
+                const iframe = document.getElementById('iframeConsole')
+                console.log(iframe)
+                iframe.onload = function () {
+                    const element = document.getElementById('iframeConsole').contentWindow.document.getElementById('content') //get the element with id=content of console.html
+                    element.scrollIntoView(false); //scrolls to the bottom of id=content 
+                };
+                iframe.src = 'console.html';     
             }
         </script>
         <meta charset="UTF-8">
@@ -47,8 +25,8 @@
     <body>
         <!--container-->
         <div class="wrapper" id="wrapper">
-            <div class="console">
-                <div id="iframeConsole"></div>
+            <div class="iframeConsole" id="iframeDiv">
+                <iframe id="iframeConsole" src="console.html" scrolling="no" ></iframe>
             </div>
             <div class="container">
                 <div class="d-flex flex-row justify-content-between px-3 py-4 align-items-center">

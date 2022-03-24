@@ -1,41 +1,39 @@
 <!doctype html>
-<html> 
-    <script>
-        window.setInterval("refreshConsole()", 5000) /*Reload the page every 5 sek*/
-        function refreshConsole() {
-            location.reload(); 
-            const element = document.getElementById("content");
-            element.scrollIntoView(false);
-        }
-    </script>
+<html > 
+   
     <style>
         html{
+           
             background: rgb(29, 29, 29);
         }
         body{
+            
             display: flex;
             position: relative;
             align-items: center;
             flex-direction: column;
             margin: auto;
         }
-        body>.historyOut{
+        body>div.historyBox{
             resize: none;
             background-color: black;
             color: green;
-            overflow: auto;
             width: 250px;
-            height: 50px;
-            /*transform: rotate(0deg); maybe i can somehow mirror the text to write from to bottom to the top idk
-            writing-mode: tb-rl; used to write Horizontaly*/ 
-        }
-        textarea{
+            height: 65px;
+            overflow: auto;
             margin-top: 10px;
             border: 1px solid #c2c1c1;
             border-radius: 10px;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
+       /* Hide scrollbar for Chrome, Safari and Opera */
+        body>div.historyBox::-webkit-scrollbar {
+            display: none;
+        }
+        
     </style>
-<body id="content">
-        <textarea class="historyOut" id = "textinput" rows="1" readonly>{{value}}</textarea> 
+<body >
+    <div class="historyBox" id="content">{% autoescape false %}{{value|safe}}{% endautoescape %}</div>
 </body>
 </html>
