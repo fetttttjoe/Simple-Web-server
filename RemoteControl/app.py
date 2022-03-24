@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, send_from_directory, redirect, jsonify
+from fileinput import filename
+from flask import Flask, request, render_template, send_from_directory, redirect, jsonify, url_for
 import RemoteControl.util.deviceManager as dM
 import os, sys
 
@@ -81,18 +82,19 @@ def default():
 # Renders Controller
 #
 @app.route('/controler.html', methods=['GET', 'POST'])
-def controller():
+def controler():
     if request.method == "POST":
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
                 print(buttonName, buttonAction) #DEBUG
                 inputToKeyboard(buttonAction) # just execute the given command (for now)
-                return redirect('controler.html')
+                return redirect(url_for('controler'))
+
          # get a better solution to check for user Inputs
         userInput = request.form.get('userInput')
         if userInput is None: 
             print("Button might not be added") #DEBUG
-            return redirect('controler.html')
+            return redirect(url_for('controler'))
         if userInput == '': # we want the enter key
             userInput = 'enter'
         #
@@ -109,6 +111,7 @@ def controller():
         if userInput:
             inputToKeyboard(userInput)
             inputToHistory(userInput)
+        return redirect(url_for('controler'))
     return render_template('controler.html')
 #
 # Site for input with "console" field which displays past inputs

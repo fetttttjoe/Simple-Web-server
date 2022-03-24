@@ -1,25 +1,19 @@
 
-html{
-    width: 100vw;
-    height:100vh;
-    justify-content: center;
-    align-items: center;
-}
-body {
+html, body {
     background: rgb(29, 29, 29);
 }
+
 .wrapper{
     display: flex;
-    position: relative;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
+
 }
 div.iframeConsole{
-    position: relative;
-    top: 15px;
+    position: absolute;
+    top: 0;
 }
 .iframeConsole>iframe{
-    overflow:hidden;
     height: 70px;
 }
 .inputBox{
@@ -34,8 +28,9 @@ div.iframeConsole{
     position: relative;
     background: #e5e5e5;
     border-radius: 30px;
-    height: 640px;
-    width: 340px;
+    max-height: 640px;
+    max-width: 340px;
+    top: 60px;
 }
 button.button {
     display:block;
