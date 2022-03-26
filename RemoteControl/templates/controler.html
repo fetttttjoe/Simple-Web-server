@@ -4,6 +4,10 @@
     
     <head>
         <script>
+            function toggleDarkmode() {
+                var element = document.getElementById('container');
+                element.classList.toggle("dark-mode");
+            }
             window.addEventListener('scroll',function() {
                 //When scroll change, you save it on localStorage.
                 localStorage.setItem('scrollPositionMain', window.scrollY);
@@ -44,143 +48,101 @@
         <title>Control</title>
     </head>
     <body>
-        <!--container-->
+        <form method="POST">    
+        <!--container for remote device-->
         <div class="wrapper" id="wrapper">
             <div class="console">
                 <div id="iframeConsole"></div>
             </div>
-            <div class="container">
+            <div class="container" id="container">
                 <div class="d-flex flex-row justify-content-between px-3 py-4 align-items-center">
                     <form method="PUT" action="/">
-                        <button type="submit" class ="button"> 
+                        <button type="submit" class ="buttonSmallCircle"> 
                             <i class="fas fa-chevron-left"></i>
                         </button>
                     </form>
-                    <form method="POST">
                         <input class = "inputBox" name="userInput" ></input>
-                    </form>
-                    <i class="fas fa-ellipsis-h"></i>
+                    <button onclick="toggleDarkmode()" type="button" class="buttonSmallCircle" >
+                    <i class="fas fa-lightbulb"></i>
+                    </button>
                 </div>
-                <div class="d-flex flex-row justify-content-center">
-                    <div class="menu-grid">
-                        <form method="POST">    
-                            <button type="submit" name ="buttonPower" class ="button" value="pressed"> 
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fas fa-power-off active"></i>
-                                    <span class="label">Power</span>
-                                </div>
-                            </button> 
-                        </form>
-                        <form method="POST">    
-                            <button type="submit" name ="buttonInput" class ="button" value="pressed"> 
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                    <span class="label">Input</span>
-                                </div>
-                            </button>
-                        </form>
-                        <form method="POST">    
-                            <button type="submit" name ="buttonControl" class ="button" value="pressed">
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fas fa-cog"></i>
-                                    <span class="label">Control</span>
-                                </div>
-                            </button>
-                        </form>
-                        <form method="POST">    
-                            <button type="submit" name ="buttonMenu" class ="button" value="pressed">
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fas fa-bars"></i>
-                                    <span class="label">Menu</span>
-                                </div>
-                            </button>
-                        </form>
-                        <form method="POST">    
-                            <button type="submit" name ="buttonNumeric" class ="button" value="pressed">
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fas fa-circle"></i>
-                                    <span class="label" >Numeric</span>
-                                </div>
-                            </button> 
-                        </form>
-                        <form method="POST">    
-                            <button type="submit" name ="buttonBack" class ="button" value="pressed">
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fas fa-arrow-left"></i>
-                                    <span class="label">Back</span>
-                                </div>
-                            </button>
-                        </form>                                    
-                    </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="menuGrid">
+                        <button type="submit" name ="buttonPower" class ="button" value="pressed"> 
+                                <i class="fas fa-power-off active"></i>
+                                <span class="label">Power</span>
+                        </button> 
+                        <button type="submit" name ="buttonInput" class ="button" value="pressed"> 
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span class="label">Input</span>
+                        </button>
+                        <button type="submit" name ="buttonControl" class ="button" value="pressed">
+                                <i class="fas fa-cog"></i>
+                                <span class="label">Control</span>
+                        </button>
+                        <button type="submit" name ="buttonMenu" class ="button" value="pressed">
+                                <i class="fas fa-bars"></i>
+                                <span class="label">Menu</span>
+                        </button>
+                        <button type="submit" name ="buttonNumeric" class ="button" value="pressed">
+                                <i class="fas fa-circle"></i>
+                                <span class="label" >Numeric</span>
+                        </button> 
+                        <button type="submit" name ="buttonBack" class ="button" value="pressed">
+                                <i class="fas fa-arrow-left"></i>
+                                <span class="label">Back</span>
+                        </button>
                 </div>
                 <div class="d-flex flex-row mt-4 justify-content-between px-2">
-                    <div class="d-flex flex-column rounded-bg py-3 px-4 justify-content-center align-items-center">
-                        <form method="POST">
-                            <button type="submit" class="button" name="buttonChannelUp" value="pressed">
-                                <i class="fas fa-chevron-up py-3 control-icon"></i>
-                            </button>
-                        </form>
-
-                        <span class="label py-3">Channel</span>
-                        <form method="POST">
-                            <button type="submit" class="button" name="buttonChannelDown" value="pressed">
-                                <i class="fas fa-chevron-down py-3 control-icon"></i>
-                            </button>
-                        </form>
+                    <div class="verticalElipse">
+                        <button type="submit" class="buttonSmall" name="buttonChannelUp" value="pressed">
+                            <i class="fas fa-chevron-up control-icon"></i>
+                        </button>
+                        <span class="label">Channel</span>
+                        <button type="submit" class="buttonSmall" name="buttonChannelDown" value="pressed">
+                            <i class="fas fa-chevron-down control-icon"></i>
+                        </button>
                     </div>
-                        <form method="POST">
-                            <button type="submit" class="buttonCircle" name="buttonHome" value="pressed">
-                                <i class="fas fa-home home-icon"></i>
-                                <span class="label">Home</span>
-                            </button>
-                        </form>  
-                    <div class="d-flex flex-column rounded-bg py-3 px-4 justify-content-center align-items-center">
-                        <form method="POST">
-                            <button type="submit" class="button" name="buttonVolumeUp" value="pressed">
-                                <i class="fas fa-plus py-3 control-icon"></i>
-                            </button>
-                        </form>
-                        <span class="label py-3">Volume</span>
-                        <form method="POST">
-                            <button type="submit" class="button" name="buttonVolumeDown" value="pressed">
-                                <i class="fas fa-minus py-3 control-icon"></i>
-                            </button>
-                        </form> 
+                        <button type="submit" class="buttonCircle" name="buttonHome" value="pressed">
+                            <i class="fas fa-home home-icon"></i>
+                            <span class="label">Home</span>
+                        </button>
+                    <div class="verticalElipse">
+                        <button type="submit" class="buttonSmall" name="buttonVolumeUp" value="pressed">
+                            <i class="fas fa-plus control-icon"></i>
+                        </button>
+                    <span class="label">Volume</span>
+                        <button type="submit" class="buttonSmall" name="buttonVolumeDown" value="pressed">
+                            <i class="fas fa-minus control-icon"></i>
+                        </button>
                     </div>
                 </div>
-                <form method="POST">
-                    <div class="mt-3 pt-5 position-relative d-flex flex-row justify-content-center align-items-center">
-
-                    <div class="circle ok-outer position-absolute">
-                        <button type="submit" class="buttonOk" name="buttonEnter" value="pressed" >
-                            <span>OK</span>
-                        </button>
-                        <button type="submit" class="buttonCircleSmall" name="buttonArrowRight" style="transform: translateX(-15px) translateY(-15px) translate(65px);" value="pressed">
-                            <i class="fas fa-caret-right control-icon"></i>
-                        </button>
-                        <button type="submit" class="buttonCircleSmall" name="buttonArrowDown" style="transform: translateX(-15px) translateY(-15px) rotate(90deg) translate(65px);"  value="pressed">
-                            <i class="fas fa-caret-right control-icon"></i>
-                        </button>
-                        <button type="submit" class="buttonCircleSmall" name="buttonArrowLeft" style="transform: translateX(-15px) translateY(-15px) rotate(180deg) translate(65px);" value="pressed">
-                            <i class="fas fa-caret-right control-icon"></i>
-                        </button>
-                        <button type="submit" class="buttonCircleSmall" name="buttonArrowUp" style="transform: translateX(-15px) translateY(-15px) rotate(270deg) translate(65px);" value="pressed">
+                <div class="outerCircle">
+                        <button type="submit" class="buttonSmallCircle" name="buttonArrowUp" style="transform: rotate(270deg) translateX(-12px);" value="pressed"> <!--there must be a better solution, this is painful-->
                             <i class="fas fa-caret-right control-icon"></i>  
                         </button>
-                    </div>
-                    </div>
-                </form>
-                <form method="POST">
-                    <div class="d-flex flex-row justify-content-between mt-2 pt-5 px-3">
-                        <button type="submit" class="buttonCircle"  name="buttonDots" value="pressed">
-                            <i class="fas fa-ellipsis-h p-3 control-icon"></i>
+                        <button type="submit" class="buttonSmallCircle" name="buttonArrowLeft" style="transform: rotate(180deg) translateY(-38px) translateX(50px);" value="pressed"> <!--there must be a better solution, this is painful-->
+                            <i class="fas fa-caret-right control-icon"></i>
                         </button>
-                        <button type="submit" class="buttonCircle" name="buttonMute" value="pressed">
-                            <i class="fas fa-volume-mute p-3 control-icon"></i>
-                        </div>
-                    </div>
-                </form>
+                        <button type="submit" class="buttonEnter" name="buttonEnter" value="pressed" >
+                            <span>OK</span>
+                        </button>
+                        <button type="submit" class="buttonSmallCircle" name="buttonArrowRight" style="transform: rotate(0deg) translateY(-35px) translateX(50px);" value="pressed"> <!--there must be a better solution, this is painful-->
+                            <i class="fas fa-caret-right control-icon"></i>
+                        </button>
+                        <button type="submit" class="buttonSmallCircle" name="buttonArrowDown" style="transform: rotate(90deg) translateX(-12px);" value="pressed"> <!--there must be a better solution, this is painful-->
+                            <i class="fas fa-caret-right control-icon"></i>
+                        </button>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <button type="submit" class="buttonCircle"  name="buttonDots" value="pressed">
+                        <i class="fas fa-ellipsis-h control-icon"></i>
+                    </button>
+                    <button type="submit" class="buttonCircle" name="buttonMute" value="pressed">
+                        <i class="fas fa-volume-mute control-icon"></i>
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </body>
 </html>

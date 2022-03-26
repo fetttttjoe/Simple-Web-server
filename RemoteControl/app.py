@@ -29,7 +29,7 @@ def inputToKeyboard(userInput):
 userInputHistory = []
 #
 # Past user Input (only storing Runtime)
-# for now just append the list unlimited with history
+# for now just append the list unlimited with test<history
 #
 def inputToHistory(userInput):
     global userInputHistory
@@ -61,7 +61,16 @@ remoteControll = {
     'buttonArrowDown'   : 'arrowDown',
     'buttonArrowLeft'   : 'arrowLeft',
     'buttonArrowRight'  : 'arrowRight',
-    'buttonChannelDown' : 'mouseRight', # doesnt seem to work, so we def need input handler for mouse
+    'buttonHome'        : None,
+    'buttonChannelUp'   : None, 
+    'buttonChannelDown' : None, 
+    'buttonPower'       : None,
+    'buttonInput'       : None,
+    'buttonControl'     : None,
+    'buttonMenu'        : None,
+    'buttonNumeric'     : None, #i dont really need this revamp
+    'buttonDots'        : None,
+    'buttonMute'        : None,
 }
 
 # default page
@@ -75,17 +84,18 @@ def default():
 @app.route('/controler.html', methods=['GET', 'POST'])
 def controler():
     if request.method == "POST":
+
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
                 print(buttonName, buttonAction) #DEBUG
-                inputToKeyboard(buttonAction) # just execute the given command (for now)
+                if buttonAction is None: 
+                    print("Button might not be added") #DEBUG
+                else:
+                    inputToKeyboard(buttonAction) # just execute the given command (for now)
                 return redirect(url_for('controler'))
 
          # get a better solution to check for user Inputs
-        userInput = request.form.get('userInput')
-        if userInput is None: 
-            print("Button might not be added") #DEBUG
-            return redirect(url_for('controler'))
+        userInput = request.form.get('userInput')    
         if userInput == '': # we want the enter key
             userInput = 'enter'
         #
@@ -151,7 +161,6 @@ def names():
     return jsonify(data)
 
 if __name__ == '__main__':
-    import os
     #
     # Create Flask app
     #
@@ -160,5 +169,5 @@ if __name__ == '__main__':
     app.static_folder   = dirName + '/static'
     cert = dirName + '/certificates/cert.pem'
     key = dirName + '/certificates/key.pem'
-    
+
     app.run("0.0.0.0", 5000, ssl_context=(cert, key), debug=True) #prob not the way to go, but since its local i cant care less.
