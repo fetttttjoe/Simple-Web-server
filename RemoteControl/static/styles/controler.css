@@ -61,7 +61,6 @@ html, body {
     grid-template-columns: auto auto auto;
     border-radius: 30px;
     border: 1px outset #c2c1c1;
-    /*overflow: hidden;*/
 }
 .menuGrid>button {
     padding: 10px 20px;
@@ -101,13 +100,6 @@ i.control-icon {
     font-size: 24px;
     color: #2e2e2e;
 }
-/*.outerCircle{
-  border: 1px solid #c2c1c1;
-  width:150px; 
-  height: 150px;
-  border-radius: 50%;
-}*/
-
 .outerCircle {
     position: relative;
     border: 1px solid #c2c1c1;
@@ -133,20 +125,3 @@ i.control-icon {
     border-radius: 50%;
     border: 1px solid #c2c1c1;
 }
-
-/*circle .buttonOk{
-    
-}
-
-.circle .buttonSmallCircle:nth-child(1) {
-    transform: rotate(0deg) translate(100px);
-}
-.circle .buttonSmallCircle:nth-child(1)  {
-    transform: rotate(90deg) translate(100px);
-}
-.circle .buttonSmallCircle:nth-child(1)  {
-    transform: rotate(180deg) translate(100px);
-}
-.circle .buttonSmallCircle:nth-child(1) {
-    transform: rotate(270deg) translate(100px);
-} */
