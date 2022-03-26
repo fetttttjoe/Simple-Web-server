@@ -29,7 +29,7 @@ html, body {
     max-width: 340px;
     top: 68px;
 }
-.dark-mode {
+.darkMode {
     background: gray;
   }
 .button{
@@ -52,7 +52,6 @@ html, body {
     border: 1px solid #c2c1c1;
     border-radius: 50%;
 }
-
 .menuGrid{
     display: grid;
     width: 80%;
@@ -82,7 +81,7 @@ span.label {
     align-items: center;
     background: #d9d9d9;
     width: 60px;
-    height: 120px;
+    height: 150px;
     border-radius: 50px;
 }
 .fas {
@@ -91,20 +90,17 @@ span.label {
 div.menuGrid>button>i.active {
     color: #d51600;
 }
-
 i.home-icon {
     font-size: 24px;
-    color: #2e2e2e;
 }
 i.control-icon {
     font-size: 24px;
-    color: #2e2e2e;
 }
 .outerCircle {
     position: relative;
     border: 1px solid #c2c1c1;
-    width:150px; 
-    height: 150px;
+    width:175px; 
+    height: 175px;
     border-radius: 50%;
     margin: auto;
     display: flex;
@@ -120,8 +116,8 @@ i.control-icon {
     height: 50px;
 }
 .buttonSmallCircle{
-    width: 25px; 
-    height: 25px;
+    width: 30px; 
+    height: 30px;
     border-radius: 50%;
     border: 1px solid #c2c1c1;
 }
