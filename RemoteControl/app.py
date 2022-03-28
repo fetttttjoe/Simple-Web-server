@@ -70,9 +70,7 @@ remoteControll = {
     'buttonMenu'        : None,
     'buttonNumeric'     : None, #i dont really need this revamp
     'buttonDots'        : None,
-    'buttonMute'        : None,
 }
-
 # default page
 #
 @app.route('/')
@@ -84,7 +82,6 @@ def default():
 @app.route('/controler.html', methods=['GET', 'POST'])
 def controler():
     if request.method == "POST":
-
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
                 print(buttonName, buttonAction) #DEBUG
@@ -103,12 +100,32 @@ def controler():
         #
         if "-sleep" in userInput: # command handler should be implemented
             temp = userInput.split()
+            if (len(temp)) == 1: # catch if only "-sleep" in input
+                inputToHistory(f"The correct format for this Command is: -sleep 'min'")
+                inputToHistory("\texample: -sleep 10")
+                return redirect(url_for('controler'))
             if temp[1].isnumeric(): # fixed on first value for now, i might implement a general input handler later
-                dM.shutdownWindows(temp[1])
-                inputToHistory(f"System will shut down in {temp[1]} min")
+                retCode = dM.shutdownWindows(temp[1])
+                if retCode == 0:
+                    inputToHistory(f"System will shut down in {temp[1]} min.")
+                    return redirect(url_for('controler'))
+                elif retCode == 1190: # shutdown already planned
+                    inputToHistory(f"System Shutdown already Planed. New Timer set for: {temp[1]} min.")
+                    dM.shutdownWindows(temp[1])
+                else:
+                    inputToHistory(f"System returned Error Code: {retCode}.")
+                return redirect(url_for('controler'))     
+            elif temp[1] == 'a':
+                retCode = dM.abortShutdownWindows()
+                if retCode != 0:
+                    inputToHistory(f"System returned Error Code: {retCode}.")
+                else:
+                    inputToHistory("Shutdown aborted!")
+                return redirect(url_for('controler'))     
             else:
-                print(f"Shutdown Timer: Pls check your Input: {userInput}") #DEBUG
-            userInput = None
+                print(f"Shutdown Timer: Pls check your Input: {userInput}.") #DEBUG
+                inputToHistory(f"Shutdown Timer: Pls check your Input: {userInput}.")
+            return redirect(url_for('controler'))
         if userInput:
             inputToKeyboard(userInput)
             inputToHistory(userInput)
