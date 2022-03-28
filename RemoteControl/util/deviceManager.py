@@ -138,7 +138,21 @@ def keyboardEvent(userInput):
 # Shutdown timer for Windows 
 # Input var:
 #   time in min     
+# return: 0 -> noError
+#         != 0 -> something went wrong
 #shutdown.exe -s -t %zeit% -f 
-def shutdownWindows(minutes):
-    minutes = int(minutes) * 60
-    os.system(f"shutdown.exe /s /t {minutes}")
+def shutdownWindows(seconds):
+    minutes = int(seconds) * 60
+    command = f"shutdown.exe /s /t {minutes}"
+    retCode = os.system(command)
+    if retCode == 1190:  # 1190 = shutdown already planed -> abort Shutdown and set new Timer
+        abortShutdownWindows()
+        retCode = os.system(command) # we want the System to shutdown on new Timer
+    return retCode  # better error handling. https://docs.microsoft.com/de-de/windows/win32/debug/system-error-codes--1000-1299-
+#
+# Abort windows Shutdowntimer with cmd and return error
+#
+def abortShutdownWindows():
+    return os.system("shutdown.exe /a") # better error handling. https://docs.microsoft.com/de-de/windows/win32/debug/system-error-codes--1000-1299-
+                                        # 1116 = no Shutdown planned, cant cancel
+    
