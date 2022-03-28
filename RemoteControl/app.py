@@ -90,7 +90,6 @@ def controler():
                 else:
                     inputToKeyboard(buttonAction) # just execute the given command (for now)
                 return redirect(url_for('controler'))
-
          # get a better solution to check for user Inputs
         userInput = request.form.get('userInput')    
         if userInput == '': # we want the enter key
@@ -106,21 +105,22 @@ def controler():
                 return redirect(url_for('controler'))
             if temp[1].isnumeric(): # fixed on first value for now, i might implement a general input handler later
                 retCode = dM.shutdownWindows(temp[1])
-                if retCode == 0:
+                if retCode == 0: # error code = 0 -> everything works
                     inputToHistory(f"System will shut down in {temp[1]} min.")
                     return redirect(url_for('controler'))
-                elif retCode == 1190: # shutdown already planned
+                elif retCode == 1190: # shutdown already planned -> set new time
                     inputToHistory(f"System Shutdown already Planed. New Timer set for: {temp[1]} min.")
                     dM.shutdownWindows(temp[1])
                 else:
-                    inputToHistory(f"System returned Error Code: {retCode}.")
+                    inputToHistory(f"System returned Error Code: {retCode}.") #User Out
+                    print(f"System returned Error Code: {retCode}.")          #DEBUG
                 return redirect(url_for('controler'))     
-            elif temp[1] == 'a':
+            elif temp[1] == 'a': # -sleep a -> abort sleep timer on system.
                 retCode = dM.abortShutdownWindows()
-                if retCode != 0:
-                    inputToHistory(f"System returned Error Code: {retCode}.")
+                if retCode == 0: 
+                    inputToHistory("Shutdown aborted!")              
                 else:
-                    inputToHistory("Shutdown aborted!")
+                    inputToHistory(f"System returned Error Code: {retCode}.")
                 return redirect(url_for('controler'))     
             else:
                 print(f"Shutdown Timer: Pls check your Input: {userInput}.") #DEBUG
