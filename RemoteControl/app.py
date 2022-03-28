@@ -105,12 +105,9 @@ def controler():
                 return redirect(url_for('controler'))
             if temp[1].isnumeric(): # fixed on first value for now, i might implement a general input handler later
                 retCode = dM.shutdownWindows(temp[1])
-                if retCode == 0: # error code = 0 -> everything works
+                if retCode == 0: # error code = 0 -> everything work or timer already set and aborted 
                     inputToHistory(f"System will shut down in {temp[1]} min.")
                     return redirect(url_for('controler'))
-                elif retCode == 1190: # shutdown already planned -> set new time
-                    inputToHistory(f"System Shutdown already Planed. New Timer set for: {temp[1]} min.")
-                    dM.shutdownWindows(temp[1])
                 else:
                     inputToHistory(f"System returned Error Code: {retCode}.") #User Out
                     print(f"System returned Error Code: {retCode}.")          #DEBUG
