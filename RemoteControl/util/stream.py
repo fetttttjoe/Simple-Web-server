@@ -67,11 +67,11 @@ class Stream(object):
     @classmethod
     def _thread(cls, waitTimeOut = 10):
         print('Starting camera thread. waitTimeOut: ', waitTimeOut)
-        iterFrames = cls.frames(cls.monitor) # 
+        iterFrames = cls.frames(cls.monitor) #get the frame generator
         for frame in iterFrames:
-            Stream.frame = frame
-            if time.time() - cls.last_access > waitTimeOut: # if there is no user interaction for waitTimeOut end thread
-                iterFrames.close()
+            cls.frame = frame #overwrite the class attrib frame
+            if time.time() - cls.lastAccess > waitTimeOut: # if there is no user interaction for waitTimeOut end thread
+                iterFrames.close() # close the generator
                 print(f'No User conntection for {waitTimeOut} seconds')
                 break
         cls.thread = None # close the thread
