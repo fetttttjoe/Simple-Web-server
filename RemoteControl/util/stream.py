@@ -22,9 +22,8 @@ class Stream(object):
     #
     def __init__(self, monitor):
         if Stream.thread is None:
-            print("Constructor: ", monitor)
             Stream.monitor = monitor
-            Stream.last_access = time.time() # create a time stamp on construction
+            Stream.lastAccess = time.time() # create a time stamp on construction
             Stream.thread = threading.Thread(target=self._thread) # create Thread
             Stream.thread.start() # start Thread
             while self.getCurrentFrame() is None:
@@ -33,11 +32,10 @@ class Stream(object):
     # Getter for current frame
     #
     def getCurrentFrame(self):
-        '''Get the current frame.'''
-        Stream.last_access = time.time() # update the time Stamp with latest Request time
+        Stream.lastAccess = time.time() # update the time Stamp with latest Request time
         return Stream.frame
     #
-    # Creates the frames 
+    # grabs the given monitor area and returns the generator 
     # monitor = {'top'      : pixel-pos,
     #            'left'     : pixel-pos,                
     #            'width'    : window-width,
@@ -48,7 +46,7 @@ class Stream(object):
     #
     @staticmethod
     def frames(monitor, fps=0.5):
-        if fps == 0: # make sure sleep is set to 0 -> TODO: Benchmark this and check if its nessesary to do more than 1 SS / 2 sek
+        if fps == 0: # make sure sleep is set to 0 -> TODO: Benchmark this and check if its useful to do more than 1 SS / 2 sek
             sleepTimer = 0
         else: 
             sleepTimer = (1 * (1 // fps)) # make even numberswith mss.mss() as sct:
@@ -69,11 +67,11 @@ class Stream(object):
     @classmethod
     def _thread(cls, waitTimeOut = 10):
         print('Starting camera thread. waitTimeOut: ', waitTimeOut)
-        iterFrames = cls.frames(cls.monitor)
+        iterFrames = cls.frames(cls.monitor) # 
         for frame in iterFrames:
             Stream.frame = frame
             if time.time() - cls.last_access > waitTimeOut: # if there is no user interaction for waitTimeOut end thread
                 iterFrames.close()
-                print(f'No User conntection for {waitTimeOut}')
+                print(f'No User conntection for {waitTimeOut} seconds')
                 break
         cls.thread = None # close the thread
