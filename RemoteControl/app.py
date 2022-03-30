@@ -1,7 +1,8 @@
-from flask import Flask, request, render_template, send_from_directory, redirect, jsonify, url_for
-import RemoteControl.util.deviceManager as dM
+from flask import Flask, request, render_template, send_from_directory, redirect, jsonify, url_for, Response
 import os, sys
-
+import RemoteControl.util.deviceManager as dM
+from RemoteControl.util.stream import Stream
+from screeninfo import get_monitors
 #
 # Program Name (also used for path), this needs to be done in a smarter way.
 #   idk why relative inputs wont let me pull the name from setup.py
@@ -107,7 +108,6 @@ def controler():
                 retCode = dM.shutdownWindows(temp[1])
                 if retCode == 0: # error code = 0 -> everything work or timer already set and aborted 
                     inputToHistory(f"System will shut down in {temp[1]} min.")
-                    return redirect(url_for('controler'))
                 else:
                     inputToHistory(f"System returned Error Code: {retCode}.") #User Out
                     print(f"System returned Error Code: {retCode}.")          #DEBUG
@@ -173,6 +173,37 @@ def console():
 def names():
     data = {"Command List": ["Search Browser", "Open CMD", "Wtf", "I can't care less"]}
     return jsonify(data)
+
+# global var Monitors
+MONITORS = []
+
+#
+# Generate the Generator Object for frames
+# https://stackoverflow.com/questions/59554042/handle-multiple-cameras-using-flask-and-opencv
+#
+def genFrames(monitorId = 0):
+    frames = []
+    global MONITORS
+    for id in range(0, len(MONITORS)):
+        info = MONITORS[id]
+        print("Info:", info)
+        frames.append(Stream(info))
+    print(frames)    
+    while True:
+        frame = frames[monitorId].getCurrentFrame()
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n ')  # concat frame one by one and show result
+def genMonitors():
+    global MONITORS
+    for m in get_monitors():
+        MONITORS.append({'top' : m.x, 'left' : m.y, 'width' : m.width, 'height' : m.height})
+    print("genFrames", MONITORS)
+@app.route('/videoFeed')
+def videoFeed():
+    genMonitors()
+    print(MONITORS)
+    return Response(genFrames(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     #
