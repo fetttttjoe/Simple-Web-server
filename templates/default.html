@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>Home</title>
+  </head>
+  <body>
+    <nav class="navMenu">
+      <a href="{{url_for('consoleInput')}}">Console</a>
+      <a href="{{url_for('controler')}}">Controller</a>
+      <a href="{{url_for('videoFeed')}}">Screens</a>
+      <div class="dot"></div>
+    </nav>
+  </body>
+</html>

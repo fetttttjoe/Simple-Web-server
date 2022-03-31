@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <!--Refresh the Iframe every 5 sek -->
+    <script>
+        window.setInterval("refreshIframe()", 5000)
+        function refreshIframe() {
+            var frameHolder=document.getElementById('iframeConsole');
+            frameHolder.src="console.html"
+        }
+    </script>
+    <style>
+        html,body{
+            background: rgb(29, 29, 29);
+        }
+        .wrapper{
+            text-align: center;
+            align-items: center;
+        }
+        .iframeConsole iframe{
+            width: 45vw;
+            height: calc(100vh-10vh)
+        }
+        .iframeInput iframe{
+            bottom:0;
+            width: 45vw;
+            height: 10vh;
+        }
+    </style>
+    <head >
+        <title>Console...</title>    
+
+    </head>
+    <body>
+        <div  class="wrapper">
+            <div class="iframeConsole">
+                <iframe id="iframeConsole" src="console.html" frameborder="0" scrolling="no"></iframe>
+            </div>
+            <div class="iframeInput">
+                <iframe src="input" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+    </body>   
+</html>
