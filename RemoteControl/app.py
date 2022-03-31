@@ -185,36 +185,37 @@ def genMonitors():
                         'left' : m.y,
                         'width' : m.width,
                         'height' : m.height})
-    print("genMonitors: ", monitors)
+    print("genMonitors: ", monitors) #DEBUG
     return monitors
-
-STREAMOBJEKTS = [] # global list containing the Stream Objects
 #
 # Function to generate the Stream Objects
 #
 def genStreamObjects():
-    global STREAMOBJEKTS
+    streamObjects = []
     monitors = genMonitors()
     for id in range(0, len(monitors)):
         info = monitors[id]
         print("genStreamObjects Info:", info)
-        STREAMOBJEKTS.append(Stream(info))
+        streamObjects.append(Stream(info))
+    return streamObjects
 #
 # Generate the Generator Object for frames
 # https://stackoverflow.com/questions/59554042/handle-multiple-cameras-using-flask-and-opencv
 #
-def genFrames(monitorId = 0):
-    global STREAMOBJEKTS
+def genFrames(StreamObj):
+    
     while True:
-        frame = STREAMOBJEKTS[monitorId].getCurrentFrame()
+        frame = StreamObj.getCurrentFrame()
         if frame is None: 
             break
         yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n ')  # concat frame one by one and show result
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 @app.route('/video_feed')
-def videoFeed():
-    genStreamObjects()
-    return Response(genFrames(),
+def videoFeed(monitorId = 0):
+    streamObjects = genStreamObjects()
+    streamObj = streamObjects[monitorId]
+    print("genFrames: ", streamObjects[monitorId])
+    return Response(genFrames(streamObj),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
