@@ -26,7 +26,7 @@ def inputToKeyboard(userInput):
             for element in userInput:
                 if element in dM.VK_CODE:
                     dM.keyboardEvent(element)            
-
+# global UserInputHistory
 userInputHistory = []
 #
 # Past user Input (only storing Runtime)
@@ -80,9 +80,46 @@ def default():
 #
 # Renders Controller
 #
-@app.route('/controler.html', methods=['GET', 'POST'])
+@app.route('/controler', methods=['GET', 'POST'])
 def controler():
+    print(request)
     if request.method == "POST":
+        # get a better solution to check for user Inputs
+        userInput = request.form.get('userInput')  
+        if userInput:
+            if userInput == '': # we want the enter key
+                userInput = 'enter'
+            #
+            # lets take -sleep <timer> for now as (userInput)
+            #
+            if "-sleep" in userInput: # command handler should be implemented
+                temp = userInput.split()
+                if (len(temp)) == 1: # catch if only "-sleep" in input
+                    inputToHistory(f"The correct format for this Command is: -sleep 'min'")
+                    inputToHistory("\texample: -sleep 10")
+                    return redirect(url_for('controler'))
+                if temp[1].isnumeric(): # fixed on first value for now, i might implement a general input handler later
+                    retCode = dM.shutdownWindows(temp[1])
+                    if retCode == 0: # error code = 0 -> everything work or timer already set and aborted 
+                        inputToHistory(f"System will shut down in {temp[1]} min.")
+                    else:
+                        inputToHistory(f"System returned Error Code: {retCode}.") #User Out
+                        print(f"System returned Error Code: {retCode}.")          #DEBUG
+                    return redirect(url_for('controler'))     
+                elif temp[1] == 'a': # -sleep a -> abort sleep timer on system.
+                    retCode = dM.abortShutdownWindows()
+                    if retCode == 0: 
+                        inputToHistory("Shutdown aborted!")              
+                    else:
+                        inputToHistory(f"System returned Error Code: {retCode}.")
+                    return redirect(url_for('controler'))     
+                else:
+                    print(f"Shutdown Timer: Pls check your Input: {userInput}.") #DEBUG
+                    inputToHistory(f"Shutdown Timer: Pls check your Input: {userInput}.")
+                return redirect(url_for('controler'))
+            inputToKeyboard(userInput)
+            inputToHistory(userInput)
+            return redirect(url_for('controler'))
         for buttonName, buttonAction in remoteControll.items():
             if request.form.get(f'{buttonName}') == "pressed":
                 print(buttonName, buttonAction) #DEBUG
@@ -91,54 +128,18 @@ def controler():
                 else:
                     inputToKeyboard(buttonAction) # just execute the given command (for now)
                 return redirect(url_for('controler'))
-         # get a better solution to check for user Inputs
-        userInput = request.form.get('userInput')    
-        if userInput == '': # we want the enter key
-            userInput = 'enter'
-        #
-        # lets take -sleep <timer> for now as (userInput)
-        #
-        if "-sleep" in userInput: # command handler should be implemented
-            temp = userInput.split()
-            if (len(temp)) == 1: # catch if only "-sleep" in input
-                inputToHistory(f"The correct format for this Command is: -sleep 'min'")
-                inputToHistory("\texample: -sleep 10")
-                return redirect(url_for('controler'))
-            if temp[1].isnumeric(): # fixed on first value for now, i might implement a general input handler later
-                retCode = dM.shutdownWindows(temp[1])
-                if retCode == 0: # error code = 0 -> everything work or timer already set and aborted 
-                    inputToHistory(f"System will shut down in {temp[1]} min.")
-                else:
-                    inputToHistory(f"System returned Error Code: {retCode}.") #User Out
-                    print(f"System returned Error Code: {retCode}.")          #DEBUG
-                return redirect(url_for('controler'))     
-            elif temp[1] == 'a': # -sleep a -> abort sleep timer on system.
-                retCode = dM.abortShutdownWindows()
-                if retCode == 0: 
-                    inputToHistory("Shutdown aborted!")              
-                else:
-                    inputToHistory(f"System returned Error Code: {retCode}.")
-                return redirect(url_for('controler'))     
-            else:
-                print(f"Shutdown Timer: Pls check your Input: {userInput}.") #DEBUG
-                inputToHistory(f"Shutdown Timer: Pls check your Input: {userInput}.")
-            return redirect(url_for('controler'))
-        if userInput:
-            inputToKeyboard(userInput)
-            inputToHistory(userInput)
-        return redirect(url_for('controler'))
     return render_template('controler.html')
 #
 # Site for input with "console" field which displays past inputs
 #
-@app.route('/frame.html')
+@app.route('/frame')
 def consoleInput():
     return render_template('frame.html')
 
 #
 # Creates the Input Box to send Commands to Keyboard
 #
-@app.route('/input.html', methods=['GET', 'POST'])
+@app.route('/input', methods=['GET', 'POST'])
 def inputBox():
     global userInputHistory
     if request.method == "POST":
@@ -173,35 +174,46 @@ def console():
 def names():
     data = {"Command List": ["Search Browser", "Open CMD", "Wtf", "I can't care less"]}
     return jsonify(data)
+#
+# generates a list containing informations about the connected monitors
+#
+def genMonitors():
+    monitors = []
+    for m in get_monitors():
+        monitors.append({
+                        'top' : m.x,
+                        'left' : m.y,
+                        'width' : m.width,
+                        'height' : m.height})
+    print("genMonitors: ", monitors)
+    return monitors
 
-# global var Monitors
-MONITORS = []
-
+STREAMOBJEKTS = [] # global list containing the Stream Objects
+#
+# Function to generate the Stream Objects
+#
+def genStreamObjects():
+    global STREAMOBJEKTS
+    monitors = genMonitors()
+    for id in range(0, len(monitors)):
+        info = monitors[id]
+        print("genStreamObjects Info:", info)
+        STREAMOBJEKTS.append(Stream(info))
 #
 # Generate the Generator Object for frames
 # https://stackoverflow.com/questions/59554042/handle-multiple-cameras-using-flask-and-opencv
 #
 def genFrames(monitorId = 0):
-    frames = []
-    global MONITORS
-    for id in range(0, len(MONITORS)):
-        info = MONITORS[id]
-        print("Info:", info)
-        frames.append(Stream(info))
-    print(frames)    
+    global STREAMOBJEKTS
     while True:
-        frame = frames[monitorId].getCurrentFrame()
+        frame = STREAMOBJEKTS[monitorId].getCurrentFrame()
+        if frame is None: 
+            break
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n ')  # concat frame one by one and show result
-def genMonitors():
-    global MONITORS
-    for m in get_monitors():
-        MONITORS.append({'top' : m.x, 'left' : m.y, 'width' : m.width, 'height' : m.height})
-    print("genFrames", MONITORS)
-@app.route('/videoFeed')
+@app.route('/video_feed')
 def videoFeed():
-    genMonitors()
-    print(MONITORS)
+    genStreamObjects()
     return Response(genFrames(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
