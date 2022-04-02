@@ -28,8 +28,9 @@ Refine Code<br>
 |Console (needs some cool design :( ): | default page: |
 |![uglyConsole](https://user-images.githubusercontent.com/45294596/159588613-d44aa9e1-6bcd-420f-a32f-18350d0c6313.png) | ![main](https://user-images.githubusercontent.com/45294596/159588593-df51131e-e351-4bfb-ab48-32e207e33c77.png)![mainHoverEffect](https://user-images.githubusercontent.com/45294596/159589356-6cbc73f5-62af-44ee-b562-b339f222c9a4.png)|
 
-<pre>
+
 added Streaming Support still need to learn alot <3
-![grafik](https://user-images.githubusercontent.com/45294596/161404270-58217327-237a-4ec4-b42f-bcc775a59791.png)
-</pre>
+![grafik](https://user-images.githubusercontent.com/45294596/161404315-746d4fc2-c021-41f9-82cc-26c85ccf52b8.png)
+
+
 
