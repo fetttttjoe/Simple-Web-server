@@ -12,6 +12,9 @@ import numpy as np
 from threading import Thread, RLock
 import time
 import itertools
+import logging
+logger = logging.getLogger(__name__)
+
 class Stream(object):
     # Class variables for each thread 
     _maxStreams = 5 # fixed for now
@@ -32,7 +35,7 @@ class Stream(object):
     def __init__(self, monitor):
         self.id = Stream._streamCount; 
         while Stream._streamCount >= Stream._maxStreams: # make sure we have some kind of limit 
-            print(f"Max Objects reached! Only {Stream._maxStreams} allowed") # DEBUG
+            logging.debug(f"Max Objects reached! Only {Stream._maxStreams} allowed") # DEBUG
             for num, element in enumerate(Stream.classStreams):
                 if element is None:
                     self.id = num
@@ -42,13 +45,14 @@ class Stream(object):
         self.monitor = monitor
         #if monitor in Stream.classMonitor:
         #    raise ValueError('Stream already created')
-        print("__init__ for ID:",self.id, Stream.classStreams, Stream.classStreams[self.id])
+        logging.debug(f"__init__ for ID: {self.id} {Stream.classStreams} {Stream.classStreams[self.id]}")
     #    
     # Getter for current frame
     #
     def getCurrentFrame(self):
-        print("getCurrentFrame self: ", self)
-        print(f"getCurrentFrame[{self.id}] time: ", Stream.classLastAccess[self.id], type(Stream.classFrames[self.id]))
+        logging.debug(f"getCurrentFrame self: self")
+        logging.debug(f"getCurrentFrame[{self.id}] time: ")
+        logging.debug(f"{Stream.classLastAccess[self.id]}, {type(Stream.classFrames[self.id])}")
         #for num, element in enumerate(Stream.classFrames):                  # DEBUG
         #    print(f"get Current Frame with type:{type(element)} at Pos:({num})")    # DEBUG
         with Stream.__lock:
@@ -60,11 +64,11 @@ class Stream(object):
     def startStream(self):
         if Stream.classStreams[self.id] is None:
             Stream.classMonitor[self.id] = Stream.classMonitor[self.id]
-            print("startStream object Created for:", Stream.classMonitor[self.id]) # DEBUG
+            logging.debug(f"startStream object Created for: {Stream.classMonitor[self.id]}") # DEBUG
             Stream.classLastAccess[self.id] = time.time()
             Stream.classStreams[self.id] = Thread(target=self._thread)
-            print(f"startStream Thread{self.id} created {self.classStreams[self.id]}") # DEBUG
-            print(self.classStreams) #DEBUG
+            logging.debug(f"startStream Thread{self.id} created {self.classStreams[self.id]}") # DEBUG
+            logging.debug(self.classStreams) #DEBUG
             Stream.classStreams[self.id].daemon = True
             Stream.classStreams[self.id].start()
     #           
@@ -88,7 +92,7 @@ class Stream(object):
             sleepTimer = (1 * (1 // fps)) # make even numbers
         with mss() as sct:
             time.sleep(sleepTimer) # we only want a screenshots with given ftps
-            print(f"frameStream from Thread[{self.id}] for Monitor: {Stream.classMonitor[self.id]}") #DEBUG
+            logging.debug(f"frameStream from Thread[{self.id}] for Monitor: {Stream.classMonitor[self.id]}") #DEBUG
             raw = sct.grab(Stream.classMonitor[self.id]) #grab data from screen using mss
             img = np.array(raw) # create numpy array
             dim = ( int(img.shape[1] * scalePercent / 100) ,    # scale the img width
@@ -104,15 +108,15 @@ class Stream(object):
     # method for custom Thread
     #
     def _thread(self, waitTimeOut = 10):
-        print(f"Starting stream thread [{self.id}]. waitTimeOut: {waitTimeOut}") # DEBUG
-        print(f"Thread at: {self.classStreams[self.id]}") # DEBUG
+        logging.debug(f"Starting stream thread [{self.id}]. waitTimeOut: {waitTimeOut}") # DEBUG
+        logging.debug(f"Thread at: {self.classStreams[self.id]}") # DEBUG
         while True:
             frame = self.generateFrame() #get the frame 
             with Stream.__lock: # make sure we lock ressource from access 
                 Stream.classFrames[self.id] = frame # add the frame to class attrib classFrames   
                 time.sleep(.5)
             if time.time() - Stream.classLastAccess[self.id] > waitTimeOut: # if there is no user interaction for waitTimeOut end thread
-                print(f'No User conntection for {waitTimeOut} seconds Thread[{self.id}] will be closed')
+                logging.debug(f'No User conntection for {waitTimeOut} seconds Thread[{self.id}] will be closed')
                 break
         # make sure thread gets unloaded
         print(Stream._streamCount) # DEBUG
