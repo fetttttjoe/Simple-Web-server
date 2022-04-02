@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Stream soon...</title>
+    <style>
+      .flexContainer {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 5px;
+        align-items: center;
+        justify-content: center;
+      }
+      .flexContainer > .flexItem {
+        height: fit-content;
+        width: fit-content;
+        overflow: hidden;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align:center" >this might demonstrate Streaming at some point:</h1>
+    <div class="flexContainer">
+      <div class="flexItem">
+        <img src="{{ url_for('stream_view') }}">
+      </div>
+      <div class="flexItem">
+        <img src="{{ url_for('stream_view1') }}"> 
+      </div>
+    </div>   
+  </body>
+</html>
