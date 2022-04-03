@@ -300,7 +300,7 @@ if __name__ == '__main__':
     key = dirName + '/certificates/key.pem'
 
     logging.basicConfig(    filename= "debug.log", #filename= f"Debug{str(datetime.now()).replace(' ', '').replace(':', '.')}.log"
-                            filemode='a',
+                            filemode='w',
                             encoding='utf-8',
                             format="{processName:<12} {message} ({filename}:{lineno})", style="{",
                             level=logging.DEBUG,
