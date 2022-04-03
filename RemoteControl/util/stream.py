@@ -50,7 +50,7 @@ class Stream(object):
     # Getter for current frame
     #
     def getCurrentFrame(self):
-        logging.debug(f"getCurrentFrame self: self")
+        logging.debug(f"getCurrentFrame self: {self}")
         logging.debug(f"getCurrentFrame[{self.id}] time: ")
         logging.debug(f"{Stream.classLastAccess[self.id]}, {type(Stream.classFrames[self.id])}")
         #for num, element in enumerate(Stream.classFrames):                  # DEBUG
