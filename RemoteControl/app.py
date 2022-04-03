@@ -29,7 +29,7 @@ def genStreamObjects():
     print("genStreamObjects Monitors:", monitors)
     for id in range(0, len(monitors)):
         info = monitors[id]
-        print("genStreamObjects Info:", info)
+        print(f"genStreamObjects Info:{info} with Moitor:{monitors[id]}")
         streamObj = Stream(info)
         STREAMOBJECTS.append(streamObj)
 
@@ -76,11 +76,8 @@ def inputToHistory(userInput):
     global USERINPUTHISTORY
     if not userInput:
         return
-    if USERINPUTHISTORY:
-        USERINPUTHISTORY.append(userInput)
-    else:
-        USERINPUTHISTORY.insert(0, userInput)
-#
+    USERINPUTHISTORY.append(userInput)
+   
 #transform every element in list into string with newline char
 #
 def listToString(userInput):

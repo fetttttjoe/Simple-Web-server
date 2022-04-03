@@ -17,12 +17,12 @@ logger = logging.getLogger(__name__)
 
 class Stream(object):
     # Class variables for each thread 
-    _maxStreams = 5 # fixed for now
-    _streamCount = 0 
-    classMonitor = np.full((_maxStreams), None)
-    classStreams = np.full((_maxStreams), None)
-    classFrames = np.full((_maxStreams), None)
-    classLastAccess = np.full((_maxStreams), None)
+    maxStreams = 5 # fixed for now
+    streamCount = 0 
+    classMonitor = np.full((maxStreams), None)
+    classStreams = np.full((maxStreams), None)
+    classFrames = np.full((maxStreams), None)
+    classLastAccess = np.full((maxStreams), None)
     __lock = RLock()
     #
     # Constructor i am sure this is not the best solution 
@@ -33,14 +33,17 @@ class Stream(object):
     #               ->    
     #
     def __init__(self, monitor):
-        self.id = Stream._streamCount; 
-        while Stream._streamCount >= Stream._maxStreams: # make sure we have some kind of limit 
-            logging.debug(f"Max Objects reached! Only {Stream._maxStreams} allowed") # DEBUG
+        while Stream.streamCount >= Stream.maxStreams: # make sure we have some kind of limit 
+            logging.debug(f"Max Objects reached! Only {Stream.maxStreams} allowed") # DEBUG
             for num, element in enumerate(Stream.classStreams):
+                print(num, element)
                 if element is None:
                     self.id = num
                     break
-        Stream._streamCount += 1
+        if Stream.streamCount < Stream.maxStreams:
+            self.id = Stream.streamCount
+        print(f"__init__ Object with ID[{self.id}] created")
+        Stream.streamCount += 1
         Stream.classMonitor[self.id] = monitor
         self.monitor = monitor
         #if monitor in Stream.classMonitor:
@@ -51,8 +54,7 @@ class Stream(object):
     #
     def getCurrentFrame(self):
         logging.debug(f"getCurrentFrame self: {self}")
-        logging.debug(f"getCurrentFrame[{self.id}] time: ")
-        logging.debug(f"{Stream.classLastAccess[self.id]}, {type(Stream.classFrames[self.id])}")
+        logging.debug(f"getCurrentFrame[{self.id}] time: {Stream.classLastAccess[self.id]}, {type(Stream.classFrames[self.id])}")
         #for num, element in enumerate(Stream.classFrames):                  # DEBUG
         #    print(f"get Current Frame with type:{type(element)} at Pos:({num})")    # DEBUG
         with Stream.__lock:
@@ -119,9 +121,9 @@ class Stream(object):
                 logging.debug(f'No User conntection for {waitTimeOut} seconds Thread[{self.id}] will be closed')
                 break
         # make sure thread gets unloaded
-        print(Stream._streamCount) # DEBUG
+        print(Stream.streamCount) # DEBUG
         with Stream.__lock:
             Stream.classStreams[self.id] = None           #TODO: I can imagine a few cases where this section is going to fail redo this with class     
             Stream.classFrames[self.id] = None
-            Stream._streamCount -= 1; #   -> Check this and keep an eye on that
-        print(Stream._streamCount, Stream.classStreams ) # DEBUG
+            Stream.streamCount -= 1; #   -> Check this and keep an eye on that
+        print(Stream.streamCount, Stream.classStreams ) # DEBUG
